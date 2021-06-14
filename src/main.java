@@ -11,9 +11,11 @@ public class main {
         BoardState board = BoardState.getDefaultStartBoard();
         System.out.println(board);
 
-        Piece pawn = board.getPieceAt(new Position(0, 0));
+        Piece pawn = board.getPieceAt(new Position(0, 1));
         DefaultMove move = new DefaultMove(pawn, new Position(0, 7));
         move.execute(board);
+        System.out.println(board);
+        board.revertLastMove();
         System.out.println(board);
 
     }

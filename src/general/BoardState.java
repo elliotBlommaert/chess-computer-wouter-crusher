@@ -12,7 +12,15 @@ public class BoardState {
     private List<List<Piece>> pieces;
     private Set<Piece> whitePiecesOnBoard;
     private Set<Piece> blackPiecesOnBoard;
+    private List<Move> moveHistory = new ArrayList<>();
 
+    public BoardState(boolean whiteToMove, List<List<Piece>> pieces, Set<Piece> whitePiecesOnBoard, Set<Piece> blackPiecesOnBoard, List<Move> moveHistory) {
+        this.whiteToMove = whiteToMove;
+        this.pieces = pieces;
+        this.whitePiecesOnBoard = whitePiecesOnBoard;
+        this.blackPiecesOnBoard = blackPiecesOnBoard;
+        this.moveHistory = moveHistory;
+    }
 
     public BoardState() {
         whiteToMove = true;
@@ -26,6 +34,16 @@ public class BoardState {
                 currentRow.add(null);
             }
         }
+    }
+
+    void addMove(Move move) {
+        moveHistory.add(move);
+    }
+
+    public void revertLastMove() {
+        Move lastMove = moveHistory.get(moveHistory.size() - 1);
+        lastMove.revert(this);
+        moveHistory.remove(moveHistory.size() - 1);
     }
 
     public static BoardState getDefaultStartBoard() {
@@ -114,6 +132,8 @@ public class BoardState {
     }
 
     void addPiece(Piece piece) {
+        assert piece != null;
+
         Position pos = piece.getPosition();
         assert getPieceAt(pos) == null;
         assert isValid();
@@ -128,9 +148,11 @@ public class BoardState {
     }
 
     void displacePiece(Piece pieceToDisplace, Position toPosition) {
+        assert pieceToDisplace != null;
+
         Position position = pieceToDisplace.getPosition();
         putPieceOnPosition(position, null);
-        putPieceOnPosition(toPosition,pieceToDisplace);
+        putPieceOnPosition(toPosition, pieceToDisplace);
         pieceToDisplace.setPosition(toPosition);
         assert isValid();
     }
@@ -206,6 +228,17 @@ public class BoardState {
         return Printer.printBoard(this);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BoardState that = (BoardState) o;
+        return whiteToMove == that.whiteToMove && Objects.equals(pieces, that.pieces) && Objects.equals(whitePiecesOnBoard, that.whitePiecesOnBoard) && Objects.equals(blackPiecesOnBoard, that.blackPiecesOnBoard) && Objects.equals(moveHistory, that.moveHistory);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(whiteToMove, pieces, whitePiecesOnBoard, blackPiecesOnBoard, moveHistory);
+    }
 }
 

@@ -37,11 +37,21 @@ public class DefaultMove extends Move {
             boardState.removePiece(capturedPiece);
         }
         boardState.displacePiece(pieceToMove, newPosition);
+        boardState.addMove(this);
     }
 
     @Override
     public void revert(BoardState boardState) {
         assert isExecuted;
+
+        assert pieceToMove.getPosition().equals(newPosition);
+        assert boardState.getPieceAt(oldPosition) == null;
+
+        boardState.displacePiece(pieceToMove,oldPosition);
+
+        if (capturedPiece != null) {
+            boardState.addPiece(capturedPiece);
+        }
 
     }
 }
