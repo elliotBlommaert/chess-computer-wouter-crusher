@@ -49,5 +49,5 @@ public abstract class Piece {
 
     abstract public String getDrawingCharacter();
 
-    abstract List<Move> getPossibleMoves(BoardState boardState);
+    abstract List<Move> getPossibleMoves(BoardState board);
 }

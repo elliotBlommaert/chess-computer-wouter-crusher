@@ -1,5 +1,6 @@
 package pieces;
 
+import general.BoardState;
 import general.Move;
 import general.Position;
 
@@ -23,7 +24,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    List<Move> getPossibleMoves() {
+    List<Move> getPossibleMoves(BoardState board) {
         return null;
     }
 }
