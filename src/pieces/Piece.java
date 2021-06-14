@@ -4,6 +4,7 @@ import general.Move;
 import general.Position;
 
 import java.util.List;
+import java.util.Objects;
 
 public abstract class Piece {
 
@@ -18,6 +19,23 @@ public abstract class Piece {
     public Piece(boolean colorWhite, int row, int column) {
         this.colorWhite = colorWhite;
         this.position = new Position(column, row);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Piece piece = (Piece) o;
+        return colorWhite == piece.colorWhite && Objects.equals(position, piece.position);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(colorWhite, position);
+    }
+
+    public void setPosition(Position position) {
+        this.position = position;
     }
 
     public Position getPosition() {
