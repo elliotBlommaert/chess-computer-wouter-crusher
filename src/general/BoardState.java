@@ -1,12 +1,10 @@
 package general;
 
 import pieces.*;
-import utils.Printer;
+import utils.Printer2;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class BoardState {
 
@@ -114,7 +112,7 @@ public class BoardState {
 
 
 
-        return Printer.printBoard(this);
+        return Printer2.printBoard(this);
     }
 
 
