@@ -1,7 +1,7 @@
 package general;
 
 import pieces.*;
-import utils.Printer2;
+import utils.Printer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -112,7 +112,7 @@ public class BoardState {
 
 
 
-        return Printer2.printBoard(this);
+        return Printer.printBoard(this);
     }
 
 
