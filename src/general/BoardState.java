@@ -4,23 +4,20 @@ import com.sun.tools.javac.util.Pair;
 import pieces.*;
 import utils.Printer;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class BoardState {
 
     private boolean whiteToMove;
     private List<List<Piece>> pieces;
+    private Set<Piece> whitePiecesOnBoard;
+    private Set<Piece> blackPiecesOnBoard;
 
-    public BoardState(boolean whiteToMove, List<List<Piece>> pieces) {
-        this.whiteToMove = whiteToMove;
-        this.pieces = pieces;
-    }
 
-    private BoardState() {
+    public BoardState() {
         whiteToMove = true;
+        whitePiecesOnBoard = new HashSet<>();
+        blackPiecesOnBoard = new HashSet<>();
         pieces = new ArrayList<>();
         for (int i = 0; i < 8; i++) {
             ArrayList<Piece> currentRow = new ArrayList<>();
@@ -111,29 +108,80 @@ public class BoardState {
 
         return boardState;
     }
-    
-    private Piece getPieceAt(Position pos) {
+
+    public Piece getPieceAt(Position pos) {
         return pieces.get(pos.getColumn()).get(pos.getRow());
     }
 
-    private void addPiece(Piece p) {
-        Position pos = p.getPosition();
+    void addPiece(Piece piece) {
+        Position pos = piece.getPosition();
         assert getPieceAt(pos) == null;
-        pieces.get(pos.getColumn()).set(pos.getRow(), p);
+        assert isValid();
+
+        if (piece.isColorWhite()) {
+            whitePiecesOnBoard.add(piece);
+        } else {
+            blackPiecesOnBoard.add(piece);
+        }
+        pieces.get(pos.getColumn()).set(pos.getRow(), piece);
+        assert isValid();
     }
 
-    private boolean validate() {
+    void displacePiece(Piece pieceToDisplace, Position toPosition) {
+        Position position = pieceToDisplace.getPosition();
+        putPieceOnPosition(position, null);
+        putPieceOnPosition(toPosition,pieceToDisplace);
+        pieceToDisplace.setPosition(toPosition);
+        assert isValid();
+    }
+
+    void removePiece(Piece pieceToRemove) {
+
+        Position position = pieceToRemove.getPosition();
+        Piece pieceAtPosition = getPieceAt(position);
+        assert pieceAtPosition.equals(pieceToRemove);
+
+        putPieceOnPosition(position, null);
+        if (pieceToRemove.isColorWhite()) {
+            whitePiecesOnBoard.remove(pieceAtPosition);
+        } else {
+            blackPiecesOnBoard.remove(pieceAtPosition);
+        }
+        assert isValid();
+    }
+
+    private void putPieceOnPosition(Position position, Piece piece) {
+        pieces.get(position.getColumn()).set(position.getRow(), piece);
+    }
+
+
+    public boolean isValid() {
+        Set<Piece> whitePieces = new HashSet<>();
+        Set<Piece> blackPieces = new HashSet<>();
         for (int i = 0; i < pieces.size(); i++) {
             List<Piece> pieceList = pieces.get(i);
             for (int j = 0; j < pieceList.size(); j++) {
                 Piece piece = pieceList.get(j);
                 if (piece != null) {
+                    if (piece.isColorWhite()) {
+                        whitePieces.add(piece);
+                    } else {
+                        blackPieces.add(piece);
+                    }
                     Position pos = piece.getPosition();
                     if (pos.getColumn() != i || pos.getRow() != j) {
                         return false;
                     }
                 }
             }
+        }
+
+        if (!whitePieces.equals(whitePiecesOnBoard)) {
+            return false;
+        }
+
+        if (!blackPieces.equals(blackPiecesOnBoard)) {
+            return false;
         }
         return true;
     }
@@ -154,7 +202,7 @@ public class BoardState {
 
     @Override
     public String toString() {
-        assert validate();
+        assert isValid();
         return Printer.printBoard(this);
     }
 

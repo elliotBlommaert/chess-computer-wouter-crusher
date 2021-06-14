@@ -1,12 +1,13 @@
 package general;
 
-public class Move {
+import pieces.Piece;
 
-    private Position oldPosition;
-    private Position newPosition;
+abstract public class Move {
 
-    public Move(Position oldPosition, Position newPosition) {
-        this.oldPosition = oldPosition;
-        this.newPosition = newPosition;
-    }
+    protected boolean isExecuted;
+
+    abstract public void execute(BoardState boardState);
+
+    abstract public void revert(BoardState boardState);
+
 }
