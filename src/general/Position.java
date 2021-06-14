@@ -70,9 +70,7 @@ public class Position {
 
     @Override
     public String toString() {
-        return "Position{" +
-                "row=" + row +
-                ", column=" + column +
-                '}';
+        String columns = "ABCDEFGH";
+        return Integer.toString(row + 1) + columns.charAt(column);
     }
 }

@@ -1,9 +1,11 @@
 package pieces;
 
 import general.BoardState;
+import general.DefaultMove;
 import general.Move;
 import general.Position;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Rook extends Piece {
@@ -27,6 +29,56 @@ public class Rook extends Piece {
 
     @Override
     public List<Move> getPossibleMoves(BoardState board) {
-        return null;
+        List<Move> moves = new ArrayList<>();
+        int startRow = position.getRow();
+        int startColumn = position.getColumn();
+        int i = startColumn + 1;
+        boolean foundPiece = false;
+        while (i < 8 && !foundPiece) {
+            Position newPosition = new Position(startRow, i);
+            Piece pieceAt = board.getPieceAt(newPosition);
+            foundPiece = pieceAt != null;
+            if (!foundPiece || pieceAt.isColorWhite() != isColorWhite()) {
+                moves.add(new DefaultMove(this, newPosition));
+            }
+            i++;
+        }
+
+        i = startColumn - 1;
+        foundPiece = false;
+        while (i >= 0 && !foundPiece) {
+            Position newPosition = new Position(startRow, i);
+            Piece pieceAt = board.getPieceAt(newPosition);
+            foundPiece = pieceAt != null;
+            if (!foundPiece || pieceAt.isColorWhite() != isColorWhite()) {
+                moves.add(new DefaultMove(this, newPosition));
+            }
+            i--;
+        }
+
+        i = startRow + 1;
+        foundPiece = false;
+        while (i < 8 && !foundPiece) {
+            Position newPosition = new Position(i, startColumn);
+            Piece pieceAt = board.getPieceAt(newPosition);
+            foundPiece = pieceAt != null;
+            if (!foundPiece || pieceAt.isColorWhite() != isColorWhite()) {
+                moves.add(new DefaultMove(this, newPosition));
+            }
+            i++;
+        }
+
+        i = startRow - 1;
+        foundPiece = false;
+        while (i >= 0 && !foundPiece) {
+            Position newPosition = new Position(i, startColumn);
+            Piece pieceAt = board.getPieceAt(newPosition);
+            foundPiece = pieceAt != null;
+            if (!foundPiece || pieceAt.isColorWhite() != isColorWhite()) {
+                moves.add(new DefaultMove(this, newPosition));
+            }
+            i--;
+        }
+        return moves;
     }
 }
