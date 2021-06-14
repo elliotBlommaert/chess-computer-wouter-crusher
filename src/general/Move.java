@@ -10,4 +10,5 @@ abstract public class Move {
 
     abstract public void revert(BoardState boardState);
 
+
 }

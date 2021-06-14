@@ -9,8 +9,8 @@ import java.util.Objects;
 
 public abstract class Piece {
 
-    private boolean colorWhite;
-    private Position position;
+    protected boolean colorWhite;
+    protected Position position;
 
     public Piece(boolean colorWhite, Position position) {
         this.colorWhite = colorWhite;
@@ -49,5 +49,5 @@ public abstract class Piece {
 
     abstract public String getDrawingCharacter();
 
-    abstract List<Move> getPossibleMoves(BoardState board);
+    public abstract List<Move> getPossibleMoves(BoardState board);
 }

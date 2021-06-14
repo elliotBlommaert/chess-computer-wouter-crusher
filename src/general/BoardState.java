@@ -140,7 +140,11 @@ public class BoardState {
         return pieces.get(pos.getColumn()).get(pos.getRow());
     }
 
-    void addPiece(Piece piece) {
+    public Piece getPieceAt(int column, int row) {
+        return pieces.get(column).get(row);
+    }
+
+    public void addPiece(Piece piece) {
         assert piece != null;
 
         Position pos = piece.getPosition();
