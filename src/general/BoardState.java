@@ -1,24 +1,38 @@
 package general;
 
+import com.sun.tools.javac.util.Pair;
 import pieces.*;
 import utils.Printer;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BoardState {
 
-
     private boolean whiteToMove;
-    private List<Piece> pieces;
+    private List<List<Piece>> pieces;
 
-    private BoardState(boolean whiteToMove, List<Piece> pieces) {
+    public BoardState(boolean whiteToMove, List<List<Piece>> pieces) {
         this.whiteToMove = whiteToMove;
         this.pieces = pieces;
     }
 
+    private BoardState() {
+        whiteToMove = true;
+        pieces = new ArrayList<>();
+        for (int i = 0; i < 8; i++) {
+            ArrayList<Piece> currentRow = new ArrayList<>();
+            pieces.add(currentRow);
+            for (int j = 0; j < 8; j++) {
+                currentRow.add(null);
+            }
+        }
+    }
 
     public static BoardState getDefaultStartBoard() {
+        BoardState boardState = new BoardState();
 
         // bottom white row;
         int bottomRow = 0;
@@ -31,15 +45,14 @@ public class BoardState {
         Knight whiteKnight2 = new Knight(true, bottomRow, 6);
         Rook whiteRook2 = new Rook(true, bottomRow, 7);
 
-        List<Piece> pieces = new ArrayList<>();
-        pieces.add(whiteRook1);
-        pieces.add(whiteRook2);
-        pieces.add(whiteBishop1);
-        pieces.add(whiteBishop2);
-        pieces.add(whiteKnight1);
-        pieces.add(whiteKnight2);
-        pieces.add(whiteQueen);
-        pieces.add(whiteKing);
+        boardState.addPiece(whiteRook1);
+        boardState.addPiece(whiteRook2);
+        boardState.addPiece(whiteBishop1);
+        boardState.addPiece(whiteBishop2);
+        boardState.addPiece(whiteKnight1);
+        boardState.addPiece(whiteKnight2);
+        boardState.addPiece(whiteQueen);
+        boardState.addPiece(whiteKing);
 
         // second white row
         int secondRow = 1;
@@ -51,14 +64,14 @@ public class BoardState {
         Pawn whitePawn6 = new Pawn(true, secondRow, 5);
         Pawn whitePawn7 = new Pawn(true, secondRow, 6);
         Pawn whitePawn8 = new Pawn(true, secondRow, 7);
-        pieces.add(whitePawn1);
-        pieces.add(whitePawn2);
-        pieces.add(whitePawn3);
-        pieces.add(whitePawn4);
-        pieces.add(whitePawn5);
-        pieces.add(whitePawn6);
-        pieces.add(whitePawn7);
-        pieces.add(whitePawn8);
+        boardState.addPiece(whitePawn1);
+        boardState.addPiece(whitePawn2);
+        boardState.addPiece(whitePawn3);
+        boardState.addPiece(whitePawn4);
+        boardState.addPiece(whitePawn5);
+        boardState.addPiece(whitePawn6);
+        boardState.addPiece(whitePawn7);
+        boardState.addPiece(whitePawn8);
 
         int secondLastRow = 6;
         Pawn blackPawn1 = new Pawn(false, secondLastRow, 0);
@@ -69,14 +82,14 @@ public class BoardState {
         Pawn blackPawn6 = new Pawn(false, secondLastRow, 5);
         Pawn blackPawn7 = new Pawn(false, secondLastRow, 6);
         Pawn blackPawn8 = new Pawn(false, secondLastRow, 7);
-        pieces.add(blackPawn1);
-        pieces.add(blackPawn2);
-        pieces.add(blackPawn3);
-        pieces.add(blackPawn4);
-        pieces.add(blackPawn5);
-        pieces.add(blackPawn6);
-        pieces.add(blackPawn7);
-        pieces.add(blackPawn8);
+        boardState.addPiece(blackPawn1);
+        boardState.addPiece(blackPawn2);
+        boardState.addPiece(blackPawn3);
+        boardState.addPiece(blackPawn4);
+        boardState.addPiece(blackPawn5);
+        boardState.addPiece(blackPawn6);
+        boardState.addPiece(blackPawn7);
+        boardState.addPiece(blackPawn8);
 
         int topRow = 7;
         Rook blackRook1 = new Rook(false, topRow, 0);
@@ -87,31 +100,61 @@ public class BoardState {
         Bishop blackBishop2 = new Bishop(false, topRow, 5);
         Knight blackKnight2 = new Knight(false, topRow, 6);
         Rook blackRook2 = new Rook(false, topRow, 7);
-        pieces.add(blackRook1);
-        pieces.add(blackRook2);
-        pieces.add(blackBishop1);
-        pieces.add(blackBishop2);
-        pieces.add(blackKnight1);
-        pieces.add(blackKnight2);
-        pieces.add(blackQueen);
-        pieces.add(blackKing);
+        boardState.addPiece(blackRook1);
+        boardState.addPiece(blackRook2);
+        boardState.addPiece(blackBishop1);
+        boardState.addPiece(blackBishop2);
+        boardState.addPiece(blackKnight1);
+        boardState.addPiece(blackKnight2);
+        boardState.addPiece(blackQueen);
+        boardState.addPiece(blackKing);
 
-        return new BoardState(true, pieces);
+        return boardState;
+    }
+    
+    private Piece getPieceAt(Position pos) {
+        return pieces.get(pos.getColumn()).get(pos.getRow());
     }
 
-    public List<Piece> getPieces() {
-        return pieces;
+    private void addPiece(Piece p) {
+        Position pos = p.getPosition();
+        assert getPieceAt(pos) == null;
+        pieces.get(pos.getColumn()).set(pos.getRow(), p);
+    }
+
+    private boolean validate() {
+        for (int i = 0; i < pieces.size(); i++) {
+            List<Piece> pieceList = pieces.get(i);
+            for (int j = 0; j < pieceList.size(); j++) {
+                Piece piece = pieceList.get(j);
+                if (piece != null) {
+                    Position pos = piece.getPosition();
+                    if (pos.getColumn() != i || pos.getRow() != j) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+    public Map<Pair<Integer, Integer>, Piece> getPositionsToPieces() {
+        Map<Pair<Integer, Integer>, Piece> positionsToPieces = new HashMap<>();
+        for (int i = 0; i < pieces.size(); i++) {
+            List<Piece> pieceList = pieces.get(i);
+            for (int j = 0; j < pieceList.size(); j++) {
+                Piece piece = pieceList.get(j);
+                if (piece != null) {
+                    positionsToPieces.put(new Pair<>(i, j), piece);
+                }
+            }
+        }
+        return positionsToPieces;
     }
 
     @Override
     public String toString() {
-
-
-
-
-
-
-
+        assert validate();
         return Printer.printBoard(this);
     }
 
