@@ -40,6 +40,15 @@ public class BoardState {
         moveHistory.add(move);
     }
 
+    public boolean hasPieceOfColorOnPosition(boolean white, Position position) {
+        Piece pieceAtPosition = getPieceAt(position);
+        if (pieceAtPosition == null) {
+            return false;
+        }
+
+        return white == pieceAtPosition.isColorWhite();
+    }
+
     public void revertLastMove() {
         Move lastMove = moveHistory.get(moveHistory.size() - 1);
         lastMove.revert(this);

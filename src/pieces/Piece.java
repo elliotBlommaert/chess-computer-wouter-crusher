@@ -1,5 +1,6 @@
 package pieces;
 
+import general.BoardState;
 import general.Move;
 import general.Position;
 
@@ -48,5 +49,5 @@ public abstract class Piece {
 
     abstract public String getDrawingCharacter();
 
-    abstract List<Move> getPossibleMoves();
+    abstract List<Move> getPossibleMoves(BoardState boardState);
 }
