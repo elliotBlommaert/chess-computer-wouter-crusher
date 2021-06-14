@@ -1,7 +1,7 @@
 package utils;
 
+import com.sun.tools.javac.util.Pair;
 import general.BoardState;
-import javafx.util.Pair;
 import pieces.Piece;
 
 import java.util.ArrayList;

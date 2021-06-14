@@ -1,6 +1,5 @@
 package general;
 
-import javafx.util.Pair;
 import pieces.*;
 import utils.Printer;
 
