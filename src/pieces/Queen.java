@@ -26,7 +26,7 @@ public class Queen extends Piece {
     }
 
     @Override
-    List<Move> getPossibleMoves(BoardState board) {
+    public List<Move> getPossibleMoves(BoardState board) {
         return null;
     }
 }
