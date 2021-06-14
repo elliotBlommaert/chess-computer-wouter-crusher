@@ -98,7 +98,8 @@ public class Printer {
         for (int columnNumber = 0; columnNumber < 8; columnNumber++) {
             Pair<Integer, Integer> position = new Pair<>(columnNumber, rowNumber);
             if (positionToPiece.containsKey(position)) {
-                stringPerColumn.add("\u2009\u200A" + positionToPiece.get(position).getDrawingCharacter() + "\u200A\u200A\u200A");
+//                stringPerColumn.add("\u2009\u200A" + positionToPiece.get(position).getDrawingCharacter() + "\u200A\u200A\u200A");
+                stringPerColumn.add(" " + positionToPiece.get(position).getDrawingCharacter() + " ");
             } else {
                 stringPerColumn.add("   ");
             }
