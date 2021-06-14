@@ -54,4 +54,10 @@ public class DefaultMove extends Move {
         }
 
     }
+
+    @Override
+    public String toString() {
+        Position startPosition = pieceToMove.getPosition();
+        return pieceToMove.getDrawingCharacter() + " " + startPosition.toString() + "->" + newPosition.toString();
+    }
 }
