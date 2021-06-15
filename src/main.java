@@ -15,7 +15,7 @@ public class main {
         BoardState boardState = BoardState.getDefaultStartBoard();
         Piece pawn = boardState.getPieceAt(1,1);
         boardState.addPiece(new Pawn(false, 100), new Position(2, 2));
-        boardState.addPiece(new Pawn(false, 101), new Position(0, 2));
+        boardState.addPiece(new Pawn(true, 101), new Position(0, 2));
 
         List<Move> possibleMoves = pawn.getPossibleMoves(boardState, new Position(1, 1));
 

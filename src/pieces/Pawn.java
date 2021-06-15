@@ -46,14 +46,20 @@ public class Pawn extends Piece {
             }
         }
         // Capture right
-        if (board.getPieceAt(startColumn + 1, startRow + direction) != null) {
-            Position newPosition = new Position(startColumn + 1, startRow + direction);
-            possibleMoves.add(new DefaultMove(this, position, newPosition));
+        if (startColumn + 1 < 8 && board.getPieceAt(startColumn + 1, startRow + direction) != null) {
+            Piece pieceAt = board.getPieceAt(startColumn + 1, startRow + direction);
+            if (colorWhite != pieceAt.colorWhite) {
+                Position newPosition = new Position(startColumn + 1, startRow + direction);
+                possibleMoves.add(new DefaultMove(this, position, newPosition));
+            }
         }
         // Capture left
-        if (board.getPieceAt(startColumn - 1, startRow + direction) != null) {
-            Position newPosition = new Position(startColumn - 1, startRow + direction);
-            possibleMoves.add(new DefaultMove(this, position, newPosition));
+        if (startColumn - 1 >= 0 && board.getPieceAt(startColumn - 1, startRow + direction) != null) {
+            Piece pieceAt = board.getPieceAt(startColumn - 1, startRow + direction);
+            if (colorWhite != pieceAt.colorWhite) {
+                Position newPosition = new Position(startColumn - 1, startRow + direction);
+                possibleMoves.add(new DefaultMove(this, position, newPosition));
+            }
         }
         // TODO: En passant & promotion
 
