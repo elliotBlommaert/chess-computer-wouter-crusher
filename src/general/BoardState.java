@@ -180,6 +180,12 @@ public class BoardState {
 
         ReverseMove newReverseMove = new ReverseMove(oldPiecePositions, null);
         moveHistory.add(newReverseMove);
+        if (whiteToMove) {
+            blackCanEnPassantToColumn = move.getEnabledEnPassantColumn();
+        } else {
+            whiteCanEnPassantToColumn = move.getEnabledEnPassantColumn();
+        }
+        whiteToMove = !whiteToMove;
     }
 
     public void revertLastMove() {

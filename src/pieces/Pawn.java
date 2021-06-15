@@ -44,7 +44,7 @@ public class Pawn extends Piece {
                 int initialRow = colorWhite ? 1 : 6;
                 if (startRow == initialRow && board.getPieceAt(startColumn, startRow + 2 * direction) == null) {
                     Position newPosition2 = new Position(startColumn, startRow + 2 * direction);
-                    possibleMoves.add(new DefaultMove(this, position, newPosition2));
+                    possibleMoves.add(new AdvanceTwoMove(this, position, newPosition2));
                 }
             }
         }
@@ -60,7 +60,9 @@ public class Pawn extends Piece {
             } else if (startRow == canEnPassantRow &&board.canEnPassantToColumn(colorWhite, startColumn + 1)) {
                 // En passant right
                 Position newPosition = new Position(startColumn + 1, startRow + direction);
-                possibleMoves.add(new EnPassantMove(this, position, newPosition));
+                Position capturedPosition = new Position(startColumn + 1, startRow);
+                Piece capturedPiece = board.getPieceAt(capturedPosition);
+                possibleMoves.add(new EnPassantMove(this, position, newPosition, capturedPiece, capturedPosition));
             }
         }
         // Capture left
@@ -75,7 +77,9 @@ public class Pawn extends Piece {
             } else if (startRow == canEnPassantRow && board.canEnPassantToColumn(colorWhite, startColumn - 1)) {
                 // En passant left
                 Position newPosition = new Position(startColumn - 1, startRow + direction);
-                possibleMoves.add(new EnPassantMove(this, position, newPosition));
+                Position capturedPosition = new Position(startColumn - 1, startRow);
+                Piece capturedPiece = board.getPieceAt(capturedPosition);
+                possibleMoves.add(new EnPassantMove(this, position, newPosition, capturedPiece, capturedPosition));
             }
         }
         // TODO: promotion
