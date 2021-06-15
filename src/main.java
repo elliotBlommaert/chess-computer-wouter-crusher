@@ -1,7 +1,4 @@
-import general.BoardState;
-import general.DefaultMove;
-import general.Move;
-import general.Position;
+import general.*;
 import pieces.*;
 
 import java.util.List;
@@ -13,12 +10,21 @@ public class main {
 
     public static void main(String[] args) {
         BoardState boardState = BoardState.getDefaultStartBoard();
-        Piece pawn = boardState.getPieceAt(1,1);
-        boardState.addPiece(new Pawn(false, 100), new Position(2, 2));
-        boardState.addPiece(new Pawn(true, 101), new Position(0, 2));
+        Piece whitePawn = boardState.getPieceAt(1,6);
+        Piece blackPawn = new Pawn(true, 100);
+        boardState.addPiece(blackPawn, new Position(2, 4));
+        boardState.executeMove(
+                new DefaultMove(
+                        boardState.getPieceAt(new Position(6, 1)),
+                        new Position(6, 1),
+                        new Position(6, 2)
+                )
+        );
 
-        List<Move> possibleMoves = pawn.getPossibleMoves(boardState, new Position(1, 1));
+        Move move = new AdvanceTwoMove(whitePawn, new Position(1, 6), new Position(1, 4));
+        boardState.executeMove(move);
 
+        List<Move> possibleMoves = blackPawn.getPossibleMoves(boardState, new Position(2, 4));
         for (Move possibleMove : possibleMoves) {
             System.out.println(possibleMove);
             boardState.executeMove(possibleMove);
