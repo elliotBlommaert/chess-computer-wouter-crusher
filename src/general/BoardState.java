@@ -14,6 +14,8 @@ public class BoardState {
     private Set<Piece> whitePiecesOnBoard;
     private Set<Piece> blackPiecesOnBoard;
     private List<ReverseMove> moveHistory;
+    private int whiteCanEnPassantToColumn;
+    private int blackCanEnPassantToColumn;
 
 
     public BoardState() {
@@ -21,6 +23,8 @@ public class BoardState {
         whitePiecesOnBoard = new HashSet<>();
         blackPiecesOnBoard = new HashSet<>();
         moveHistory = new ArrayList<>();
+        whiteCanEnPassantToColumn = -1;
+        blackCanEnPassantToColumn = -1;
         pieces = new ArrayList<>();
         for (int i = 0; i < 8; i++) {
             ArrayList<Piece> currentRow = new ArrayList<>();
@@ -225,6 +229,14 @@ public class BoardState {
     @Override
     public int hashCode() {
         return Objects.hash(whiteToMove, pieces, whitePiecesOnBoard, blackPiecesOnBoard, moveHistory);
+    }
+
+    public boolean canEnPassantToColumn(boolean colorWhite, int column) {
+        if (colorWhite) {
+            return whiteCanEnPassantToColumn == column;
+        } else {
+            return blackCanEnPassantToColumn == column;
+        }
     }
 
     private static class ReverseMove {

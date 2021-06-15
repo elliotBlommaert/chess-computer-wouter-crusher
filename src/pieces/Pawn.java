@@ -1,9 +1,6 @@
 package pieces;
 
-import general.BoardState;
-import general.DefaultMove;
-import general.Move;
-import general.Position;
+import general.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,22 +43,36 @@ public class Pawn extends Piece {
             }
         }
         // Capture right
-        if (startColumn + 1 < 8 && board.getPieceAt(startColumn + 1, startRow + direction) != null) {
-            Piece pieceAt = board.getPieceAt(startColumn + 1, startRow + direction);
-            if (colorWhite != pieceAt.colorWhite) {
+        if (startColumn + 1 < 8) {
+            int canEnPassantRow = colorWhite ? 4 : 3;
+            if (board.getPieceAt(startColumn + 1, startRow + direction) != null) {
+                Piece pieceAt = board.getPieceAt(startColumn + 1, startRow + direction);
+                if (colorWhite != pieceAt.colorWhite) {
+                    Position newPosition = new Position(startColumn + 1, startRow + direction);
+                    possibleMoves.add(new DefaultMove(this, position, newPosition));
+                }
+            } else if (startRow == canEnPassantRow &&board.canEnPassantToColumn(colorWhite, startColumn + 1)) {
+                // En passant right
                 Position newPosition = new Position(startColumn + 1, startRow + direction);
-                possibleMoves.add(new DefaultMove(this, position, newPosition));
+                possibleMoves.add(new EnPassantMove(this, position, newPosition));
             }
         }
         // Capture left
-        if (startColumn - 1 >= 0 && board.getPieceAt(startColumn - 1, startRow + direction) != null) {
-            Piece pieceAt = board.getPieceAt(startColumn - 1, startRow + direction);
-            if (colorWhite != pieceAt.colorWhite) {
+        if (startColumn - 1 >= 0) {
+            int canEnPassantRow = colorWhite ? 4 : 3;
+            if (board.getPieceAt(startColumn - 1, startRow + direction) != null) {
+                Piece pieceAt = board.getPieceAt(startColumn - 1, startRow + direction);
+                if (colorWhite != pieceAt.colorWhite) {
+                    Position newPosition = new Position(startColumn - 1, startRow + direction);
+                    possibleMoves.add(new DefaultMove(this, position, newPosition));
+                }
+            } else if (startRow == canEnPassantRow && board.canEnPassantToColumn(colorWhite, startColumn - 1)) {
+                // En passant left
                 Position newPosition = new Position(startColumn - 1, startRow + direction);
-                possibleMoves.add(new DefaultMove(this, position, newPosition));
+                possibleMoves.add(new EnPassantMove(this, position, newPosition));
             }
         }
-        // TODO: En passant & promotion
+        // TODO: promotion
 
         return possibleMoves;
     }
