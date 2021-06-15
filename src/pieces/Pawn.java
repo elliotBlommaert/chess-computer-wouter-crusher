@@ -37,12 +37,18 @@ public class Pawn extends Piece {
         // Move forward
         if (board.getPieceAt(startColumn, startRow + direction) == null) {
             Position newPosition = new Position(startColumn, startRow + direction);
-            possibleMoves.add(new DefaultMove(this, position, newPosition));
-            // Two forward
-            int initialRow = colorWhite ? 1 : 6;
-            if (startRow == initialRow && board.getPieceAt(startColumn, startRow + 2 * direction) == null) {
-                Position newPosition2 = new Position(startColumn, startRow + 2 * direction);
-                possibleMoves.add(new DefaultMove(this, position, newPosition2));
+            int finalRow = colorWhite ? 6 : 1;
+            if (startRow == finalRow) {
+                // todo: make promotion moves
+            } else {
+                possibleMoves.add(new DefaultMove(this, position, newPosition));
+
+                // Two forward
+                int initialRow = colorWhite ? 1 : 6;
+                if (startRow == initialRow && board.getPieceAt(startColumn, startRow + 2 * direction) == null) {
+                    Position newPosition2 = new Position(startColumn, startRow + 2 * direction);
+                    possibleMoves.add(new DefaultMove(this, position, newPosition2));
+                }
             }
         }
         // Capture right
