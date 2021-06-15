@@ -13,55 +13,49 @@ public class MoveTest {
     public void testMoveToEmptySquare() {
         BoardState boardState = new BoardState();
         Position oldPosition = new Position(0, 0);
-        Rook rock = new Rook(true, oldPosition);
-        boardState.addPiece(rock);
+        Rook rock = new Rook(true, 0);
+        boardState.addPiece(rock, oldPosition);
 
         Position newPosition = new Position(0, 1);
-        Move move = new DefaultMove(rock, newPosition);
+        Move move = new DefaultMove(rock, oldPosition, newPosition);
 
-        assertThatCode(() -> move.execute(boardState)).doesNotThrowAnyException();
-        assertThat(rock.getPosition()).isEqualTo(newPosition);
-        assertThat(boardState.isValid()).isTrue();
-
-        assertThatCode(boardState::revertLastMove).doesNotThrowAnyException();
-        assertThat(rock.getPosition()).isEqualTo(oldPosition);
+        assertThatCode(() -> boardState.executeMove(move)).doesNotThrowAnyException();
+        assertThat(boardState.getPieceAt(oldPosition)).isNull();
+        assertThat(boardState.getPieceAt(newPosition)).isEqualTo(rock);
         assertThat(boardState.isValid()).isTrue();
     }
 
     @Test
     public void testCapture() {
         BoardState boardState = new BoardState();
-        Position oldPositionWhiteRock = new Position(0, 0);
-        Rook whiteRock = new Rook(true, oldPositionWhiteRock);
-        Position oldPositionBlackRock = new Position(0, 1);
-        Rook blackRock = new Rook(false, oldPositionBlackRock);
-        boardState.addPiece(whiteRock);
-        boardState.addPiece(blackRock);
+        Position positionWhiteRock = new Position(0, 0);
+        Rook whiteRock = new Rook(true, 0);
+        Position positionBlackRock = new Position(0, 1);
+        Rook blackRock = new Rook(false, 1);
+        boardState.addPiece(whiteRock, positionWhiteRock);
+        boardState.addPiece(blackRock, positionBlackRock);
 
-        Move move = new DefaultMove(whiteRock, oldPositionBlackRock);
+        Move move = new DefaultMove(whiteRock, positionWhiteRock, positionBlackRock);
 
-        assertThatCode(() -> move.execute(boardState)).doesNotThrowAnyException();
-        assertThat(whiteRock.getPosition()).isEqualTo(oldPositionBlackRock);
-        assertThat(boardState.isValid()).isTrue();
-
-        assertThatCode(boardState::revertLastMove).doesNotThrowAnyException();
-        assertThat(whiteRock.getPosition()).isEqualTo(oldPositionWhiteRock);
-        assertThat(blackRock.getPosition()).isEqualTo(oldPositionBlackRock);
+        assertThatCode(() -> boardState.executeMove(move)).doesNotThrowAnyException();
+        assertThat(boardState.getPieceAt(positionWhiteRock)).isNull();
+        assertThat(boardState.getPieceAt(positionBlackRock)).isEqualTo(whiteRock);
         assertThat(boardState.isValid()).isTrue();
     }
 
     @Test
     public void testIllegalMove() {
         BoardState boardState = new BoardState();
-        Rook whiteRock = new Rook(true, new Position(0, 0));
-        Rook blackRock = new Rook(true, new Position(0, 1));
-        boardState.addPiece(whiteRock);
-        boardState.addPiece(blackRock);
+        Position oldPositionWhiteRock = new Position(0, 0);
+        Rook whiteRock = new Rook(true, 0);
+        Position oldPositionBlackRock = new Position(0, 1);
+        Rook blackRock = new Rook(true, 1);
+        boardState.addPiece(whiteRock, oldPositionWhiteRock);
+        boardState.addPiece(blackRock, oldPositionBlackRock);
 
-        Position newPosition = new Position(0, 1);
-        Move move = new DefaultMove(whiteRock, newPosition);
+        Move move = new DefaultMove(whiteRock, oldPositionWhiteRock, oldPositionBlackRock);
 
-        assertThatExceptionOfType(AssertionError.class).isThrownBy(() -> move.execute(boardState));
+        assertThatExceptionOfType(AssertionError.class).isThrownBy(() -> boardState.executeMove(move));
     }
 
 }

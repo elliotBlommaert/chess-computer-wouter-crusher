@@ -10,37 +10,25 @@ import java.util.Objects;
 public abstract class Piece {
 
     protected boolean colorWhite;
-    protected Position position;
+    protected int id;
 
-    public Piece(boolean colorWhite, Position position) {
+    public Piece(boolean colorWhite, int id) {
         this.colorWhite = colorWhite;
-        this.position = position;
+        this.id = id;
     }
 
-    public Piece(boolean colorWhite, int row, int column) {
-        this.colorWhite = colorWhite;
-        this.position = new Position(column, row);
-    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Piece piece = (Piece) o;
-        return colorWhite == piece.colorWhite && Objects.equals(position, piece.position);
+        return piece.id == this.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(colorWhite, position);
-    }
-
-    public void setPosition(Position position) {
-        this.position = position;
-    }
-
-    public Position getPosition() {
-        return position;
+        return Objects.hash(id);
     }
 
     public boolean isColorWhite() {
@@ -49,5 +37,5 @@ public abstract class Piece {
 
     abstract public String getDrawingCharacter();
 
-    public abstract List<Move> getPossibleMoves(BoardState board);
+    public abstract List<Move> getPossibleMoves(BoardState board, Position position);
 }

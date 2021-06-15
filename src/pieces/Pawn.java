@@ -8,13 +8,10 @@ import java.util.List;
 
 public class Pawn extends Piece {
 
-    public Pawn(boolean colorWhite, Position position) {
-        super(colorWhite, position);
+    public Pawn(boolean colorWhite, int id) {
+        super(colorWhite, id);
     }
 
-    public Pawn(boolean colorWhite, int row, int column) {
-        super(colorWhite, row, column);
-    }
 
     @Override
     public String getDrawingCharacter() {
@@ -26,7 +23,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public List<Move> getPossibleMoves(BoardState board) {
+    public List<Move> getPossibleMoves(BoardState board, Position position) {
         return null;
     }
 }

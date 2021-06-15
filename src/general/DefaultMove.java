@@ -1,63 +1,30 @@
 package general;
 
+import com.sun.tools.javac.util.Pair;
 import pieces.Piece;
+
+import java.util.Collections;
+import java.util.List;
 
 public class DefaultMove extends Move {
 
     private Piece pieceToMove;
+    private Position oldPosition;
     private Position newPosition;
 
-    private Position oldPosition;
-    private Piece capturedPiece;
-
-    public DefaultMove(Piece pieceToMove, Position newPosition) {
+    public DefaultMove(Piece pieceToMove, Position oldPosition, Position newPosition) {
         this.pieceToMove = pieceToMove;
+        this.oldPosition = oldPosition;
         this.newPosition = newPosition;
     }
 
     @Override
-    public void execute(BoardState boardState) {
-        assert !isExecuted;
-        isExecuted = true;
-
-
-        assert boardState.isValid();
-
-        oldPosition = pieceToMove.getPosition();
-        Piece pieceAtOldPositionOnBoard = boardState.getPieceAt(oldPosition);
-        assert pieceAtOldPositionOnBoard.equals(pieceToMove);
-
-        capturedPiece = boardState.getPieceAt(newPosition);
-
-        boolean moveToEmptySquare = capturedPiece == null;
-        boolean isCapture = capturedPiece != null && capturedPiece.isColorWhite() != pieceToMove.isColorWhite();
-        assert moveToEmptySquare || isCapture;
-
-        if (isCapture) {
-            boardState.removePiece(capturedPiece);
-        }
-        boardState.displacePiece(pieceToMove, newPosition);
-        boardState.addMove(this);
-    }
-
-    @Override
-    public void revert(BoardState boardState) {
-        assert isExecuted;
-
-        assert pieceToMove.getPosition().equals(newPosition);
-        assert boardState.getPieceAt(oldPosition) == null;
-
-        boardState.displacePiece(pieceToMove,oldPosition);
-
-        if (capturedPiece != null) {
-            boardState.addPiece(capturedPiece);
-        }
-
+    public List<Pair<Piece, Pair<Position, Position>>> getPiecesToMove() {
+        return Collections.singletonList(new Pair<>(pieceToMove, new Pair<>(oldPosition, newPosition)));
     }
 
     @Override
     public String toString() {
-        Position startPosition = pieceToMove.getPosition();
-        return pieceToMove.getDrawingCharacter() + " " + startPosition.toString() + "->" + newPosition.toString();
+        return pieceToMove.getDrawingCharacter() + " " + oldPosition.toString() + "->" + newPosition.toString();
     }
 }

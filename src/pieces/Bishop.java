@@ -10,13 +10,10 @@ import java.util.List;
 
 public class Bishop extends Piece {
 
-    public Bishop(boolean colorWhite, Position position) {
-        super(colorWhite, position);
+    public Bishop(boolean colorWhite, int id) {
+        super(colorWhite, id);
     }
 
-    public Bishop(boolean colorWhite, int row, int column) {
-        super(colorWhite, row, column);
-    }
 
     @Override
     public String getDrawingCharacter() {
@@ -28,11 +25,11 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public List<Move> getPossibleMoves(BoardState board) {
+    public List<Move> getPossibleMoves(BoardState board, Position position) {
 
         List<Move> possibleMoves = new ArrayList<>();
-        int currentColumn = this.position.getColumn();
-        int currentRow = this.position.getRow();
+        int currentColumn = position.getColumn();
+        int currentRow = position.getRow();
 
 
         int upRightColumn = currentColumn + 1;
@@ -44,7 +41,7 @@ public class Bishop extends Piece {
             foundPieceInLineUpRight = pieceAtPosition != null;
 
             if (pieceAtPosition == null || pieceAtPosition.colorWhite != this.colorWhite) {
-                DefaultMove newMove = new DefaultMove(this, new Position(upRightColumn, upRightRow));
+                DefaultMove newMove = new DefaultMove(this, position, new Position(upRightColumn, upRightRow));
                 possibleMoves.add(newMove);
             }
 
@@ -62,7 +59,7 @@ public class Bishop extends Piece {
             foundPieceInLineDownRight = pieceAtPosition != null;
 
             if (pieceAtPosition == null || pieceAtPosition.colorWhite != this.colorWhite) {
-                DefaultMove newMove = new DefaultMove(this, new Position(downRightColumn, downRightRow));
+                DefaultMove newMove = new DefaultMove(this, position, new Position(downRightColumn, downRightRow));
                 possibleMoves.add(newMove);
             }
 
@@ -80,7 +77,7 @@ public class Bishop extends Piece {
             foundPieceInLineDownLeft = pieceAtPosition != null;
 
             if (pieceAtPosition == null || pieceAtPosition.colorWhite != this.colorWhite) {
-                DefaultMove newMove = new DefaultMove(this, new Position(downLeftColumn, downLeftRow));
+                DefaultMove newMove = new DefaultMove(this, position, new Position(downLeftColumn, downLeftRow));
                 possibleMoves.add(newMove);
             }
 
@@ -97,7 +94,7 @@ public class Bishop extends Piece {
             foundPieceInLineUpLeft = pieceAtPosition != null;
 
             if (pieceAtPosition == null || pieceAtPosition.colorWhite != this.colorWhite) {
-                DefaultMove newMove = new DefaultMove(this, new Position(upLeftColumn, upLeftRow));
+                DefaultMove newMove = new DefaultMove(this, position, new Position(upLeftColumn, upLeftRow));
                 possibleMoves.add(newMove);
             }
 

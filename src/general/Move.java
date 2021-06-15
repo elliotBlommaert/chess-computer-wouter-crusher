@@ -1,14 +1,11 @@
 package general;
 
+import com.sun.tools.javac.util.Pair;
 import pieces.Piece;
+
+import java.util.List;
 
 abstract public class Move {
 
-    protected boolean isExecuted;
-
-    abstract public void execute(BoardState boardState);
-
-    abstract public void revert(BoardState boardState);
-
-
+    abstract public List<Pair<Piece, Pair<Position,Position>>> getPiecesToMove();
 }

@@ -10,12 +10,8 @@ import java.util.List;
 
 public class Queen extends Piece {
 
-    public Queen(boolean colorWhite, Position position) {
-        super(colorWhite, position);
-    }
-
-    public Queen(boolean colorWhite, int row, int column) {
-        super(colorWhite, row, column);
+    public Queen(boolean colorWhite, int id) {
+        super(colorWhite, id);
     }
 
     @Override
@@ -28,7 +24,7 @@ public class Queen extends Piece {
     }
 
     @Override
-    public List<Move> getPossibleMoves(BoardState board) {
+    public List<Move> getPossibleMoves(BoardState board, Position position) {
         List<Move> moves = new ArrayList<>();
         int startRow = position.getRow();
         int startColumn = position.getColumn();
@@ -39,7 +35,7 @@ public class Queen extends Piece {
             Piece pieceAt = board.getPieceAt(startRow, i);
             foundPiece = pieceAt != null;
             if (!foundPiece || pieceAt.colorWhite != this.colorWhite) {
-                moves.add(new DefaultMove(this, new Position(startRow, i)));
+                moves.add(new DefaultMove(this, position, new Position(startRow, i)));
             }
             i++;
         }
@@ -50,7 +46,7 @@ public class Queen extends Piece {
             Piece pieceAt = board.getPieceAt(startRow, i);
             foundPiece = pieceAt != null;
             if (!foundPiece || pieceAt.colorWhite != this.colorWhite) {
-                moves.add(new DefaultMove(this, new Position(startRow, i)));
+                moves.add(new DefaultMove(this, position, new Position(startRow, i)));
             }
             i--;
         }
@@ -61,7 +57,7 @@ public class Queen extends Piece {
             Piece pieceAt = board.getPieceAt(i, startColumn);
             foundPiece = pieceAt != null;
             if (!foundPiece || pieceAt.colorWhite != this.colorWhite) {
-                moves.add(new DefaultMove(this, new Position(i, startColumn)));
+                moves.add(new DefaultMove(this, position, new Position(i, startColumn)));
             }
             i++;
         }
@@ -72,7 +68,7 @@ public class Queen extends Piece {
             Piece pieceAt = board.getPieceAt(i, startColumn);
             foundPiece = pieceAt != null;
             if (!foundPiece || pieceAt.colorWhite != this.colorWhite) {
-                moves.add(new DefaultMove(this, new Position(i, startColumn)));
+                moves.add(new DefaultMove(this, position, new Position(i, startColumn)));
             }
             i--;
         }
@@ -84,7 +80,7 @@ public class Queen extends Piece {
             Piece pieceAt = board.getPieceAt(i, j);
             foundPiece = pieceAt != null;
             if (!foundPiece || pieceAt.colorWhite != this.colorWhite) {
-                moves.add(new DefaultMove(this, new Position(i, j)));
+                moves.add(new DefaultMove(this, position, new Position(i, j)));
             }
             i++;
             j++;
@@ -97,7 +93,7 @@ public class Queen extends Piece {
             Piece pieceAt = board.getPieceAt(i, j);
             foundPiece = pieceAt != null;
             if (!foundPiece || pieceAt.colorWhite != this.colorWhite) {
-                moves.add(new DefaultMove(this, new Position(i, j)));
+                moves.add(new DefaultMove(this, position, new Position(i, j)));
             }
             i++;
             j--;
@@ -110,7 +106,7 @@ public class Queen extends Piece {
             Piece pieceAt = board.getPieceAt(i, j);
             foundPiece = pieceAt != null;
             if (!foundPiece || pieceAt.colorWhite != this.colorWhite) {
-                moves.add(new DefaultMove(this, new Position(i, j)));
+                moves.add(new DefaultMove(this, position, new Position(i, j)));
             }
             i--;
             j--;
@@ -123,7 +119,7 @@ public class Queen extends Piece {
             Piece pieceAt = board.getPieceAt(i, j);
             foundPiece = pieceAt != null;
             if (!foundPiece || pieceAt.colorWhite != this.colorWhite) {
-                moves.add(new DefaultMove(this, new Position(i, j)));
+                moves.add(new DefaultMove(this, position, new Position(i, j)));
             }
             i--;
             j++;

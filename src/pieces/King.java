@@ -8,12 +8,8 @@ import java.util.List;
 
 public class King extends Piece {
 
-    public King(boolean colorWhite, Position position) {
-        super(colorWhite, position);
-    }
-
-    public King(boolean colorWhite, int row, int column) {
-        super(colorWhite, row, column);
+    public King(boolean colorWhite, int id) {
+        super(colorWhite, id);
     }
 
     @Override
@@ -25,7 +21,7 @@ public class King extends Piece {
     }
 
     @Override
-    public List<Move> getPossibleMoves(BoardState board) {
+    public List<Move> getPossibleMoves(BoardState board, Position position) {
         return null;
     }
 }

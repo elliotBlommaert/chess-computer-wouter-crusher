@@ -9,13 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Knight extends Piece {
-    public Knight(boolean colorWhite, Position position) {
-        super(colorWhite, position);
+    public Knight(boolean colorWhite, int id) {
+        super(colorWhite, id);
     }
 
-    public Knight(boolean colorWhite, int row, int column) {
-        super(colorWhite, row, column);
-    }
 
     @Override
     public String getDrawingCharacter() {
@@ -26,10 +23,9 @@ public class Knight extends Piece {
     }
 
     @Override
-    public List<Move> getPossibleMoves(BoardState board) {
+    public List<Move> getPossibleMoves(BoardState board, Position position) {
 
         List<Move> possibleMoves = new ArrayList<>();
-
 
         int column = position.getColumn();
         int row = position.getRow();
@@ -38,7 +34,7 @@ public class Knight extends Piece {
         int upLeftRow = row + 2;
         Piece pieceAtTarget = board.getPieceAt(upLeftColumn, upLeftRow);
         if (row < 8 && upLeftColumn >= 0 && (pieceAtTarget == null || pieceAtTarget.colorWhite != pieceAtTarget.colorWhite)) {
-            DefaultMove newMove = new DefaultMove(this, new Position(upLeftColumn, upLeftRow));
+            DefaultMove newMove = new DefaultMove(this, position, new Position(upLeftColumn, upLeftRow));
             possibleMoves.add(newMove);
         }
 
@@ -46,7 +42,7 @@ public class Knight extends Piece {
         int leftUpRow = row + 1;
         pieceAtTarget = board.getPieceAt(leftUpColumn, leftUpRow);
         if (row < 8 && leftUpColumn >= 0 && (pieceAtTarget == null || pieceAtTarget.colorWhite != pieceAtTarget.colorWhite)) {
-            DefaultMove newMove = new DefaultMove(this, new Position(leftUpColumn, leftUpRow));
+            DefaultMove newMove = new DefaultMove(this, position, new Position(leftUpColumn, leftUpRow));
             possibleMoves.add(newMove);
         }
 
@@ -54,7 +50,7 @@ public class Knight extends Piece {
         int upRightRow = row + 2;
         pieceAtTarget = board.getPieceAt(upRightColumn, upRightRow);
         if (row < 8 && upRightColumn < 8  && (pieceAtTarget == null || pieceAtTarget.colorWhite != pieceAtTarget.colorWhite)) {
-            DefaultMove newMove = new DefaultMove(this, new Position(upRightColumn, upRightRow));
+            DefaultMove newMove = new DefaultMove(this, position, new Position(upRightColumn, upRightRow));
             possibleMoves.add(newMove);
         }
 
@@ -62,7 +58,7 @@ public class Knight extends Piece {
         int rightUpRow = row + 1;
         pieceAtTarget = board.getPieceAt(rightUpColumn, rightUpRow);
         if (row < 8 && rightUpColumn < 8  && (pieceAtTarget == null || pieceAtTarget.colorWhite != pieceAtTarget.colorWhite)) {
-            DefaultMove newMove = new DefaultMove(this, new Position(rightUpColumn, rightUpRow));
+            DefaultMove newMove = new DefaultMove(this, position, new Position(rightUpColumn, rightUpRow));
             possibleMoves.add(newMove);
         }
 
@@ -70,7 +66,7 @@ public class Knight extends Piece {
         int downLeftRow = row - 2;
         pieceAtTarget = board.getPieceAt(downLeftColumn, downLeftRow);
         if (row >= 0 && downLeftColumn >= 0 && (pieceAtTarget == null || pieceAtTarget.colorWhite != pieceAtTarget.colorWhite)) {
-            DefaultMove newMove = new DefaultMove(this, new Position(downLeftColumn, downLeftRow));
+            DefaultMove newMove = new DefaultMove(this, position, new Position(downLeftColumn, downLeftRow));
             possibleMoves.add(newMove);
         }
 
@@ -78,7 +74,7 @@ public class Knight extends Piece {
         int leftDownRow = row - 1;
         pieceAtTarget = board.getPieceAt(leftDownColumn, leftDownRow);
         if (row >= 0 && leftDownColumn >= 0 && (pieceAtTarget == null || pieceAtTarget.colorWhite != pieceAtTarget.colorWhite)) {
-            DefaultMove newMove = new DefaultMove(this, new Position(leftDownColumn, leftDownRow));
+            DefaultMove newMove = new DefaultMove(this, position, new Position(leftDownColumn, leftDownRow));
             possibleMoves.add(newMove);
         }
 
@@ -86,7 +82,7 @@ public class Knight extends Piece {
         int downRightRow = row - 2;
         pieceAtTarget = board.getPieceAt(downRightColumn, downRightRow);
         if (row >= 0 && downRightColumn >= 0 && (pieceAtTarget == null || pieceAtTarget.colorWhite != pieceAtTarget.colorWhite)) {
-            DefaultMove newMove = new DefaultMove(this, new Position(downRightColumn, downRightRow));
+            DefaultMove newMove = new DefaultMove(this, position, new Position(downRightColumn, downRightRow));
             possibleMoves.add(newMove);
         }
 
@@ -94,7 +90,7 @@ public class Knight extends Piece {
         int rightDownRow = row - 1;
         pieceAtTarget = board.getPieceAt(rightDownColumn, rightDownRow);
         if (row >= 0 && rightDownColumn >= 0 && (pieceAtTarget == null || pieceAtTarget.colorWhite != pieceAtTarget.colorWhite)) {
-            DefaultMove newMove = new DefaultMove(this, new Position(rightDownColumn, rightDownRow));
+            DefaultMove newMove = new DefaultMove(this, position, new Position(rightDownColumn, rightDownRow));
             possibleMoves.add(newMove);
         }
 
