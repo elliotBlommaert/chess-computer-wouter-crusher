@@ -32,14 +32,14 @@ public class Rook extends Piece {
         List<Move> moves = new ArrayList<>();
         int startRow = position.getRow();
         int startColumn = position.getColumn();
+
         int i = startColumn + 1;
         boolean foundPiece = false;
         while (i < 8 && !foundPiece) {
-            Position newPosition = new Position(startRow, i);
-            Piece pieceAt = board.getPieceAt(newPosition);
+            Piece pieceAt = board.getPieceAt(startRow, i);
             foundPiece = pieceAt != null;
             if (!foundPiece || pieceAt.isColorWhite() != isColorWhite()) {
-                moves.add(new DefaultMove(this, newPosition));
+                moves.add(new DefaultMove(this, new Position(startRow, i)));
             }
             i++;
         }
@@ -47,11 +47,10 @@ public class Rook extends Piece {
         i = startColumn - 1;
         foundPiece = false;
         while (i >= 0 && !foundPiece) {
-            Position newPosition = new Position(startRow, i);
-            Piece pieceAt = board.getPieceAt(newPosition);
+            Piece pieceAt = board.getPieceAt(startRow, i);
             foundPiece = pieceAt != null;
             if (!foundPiece || pieceAt.isColorWhite() != isColorWhite()) {
-                moves.add(new DefaultMove(this, newPosition));
+                moves.add(new DefaultMove(this, new Position(startRow, i)));
             }
             i--;
         }
@@ -59,11 +58,10 @@ public class Rook extends Piece {
         i = startRow + 1;
         foundPiece = false;
         while (i < 8 && !foundPiece) {
-            Position newPosition = new Position(i, startColumn);
-            Piece pieceAt = board.getPieceAt(newPosition);
+            Piece pieceAt = board.getPieceAt(i, startColumn);
             foundPiece = pieceAt != null;
             if (!foundPiece || pieceAt.isColorWhite() != isColorWhite()) {
-                moves.add(new DefaultMove(this, newPosition));
+                moves.add(new DefaultMove(this, new Position(i, startColumn)));
             }
             i++;
         }
@@ -71,11 +69,10 @@ public class Rook extends Piece {
         i = startRow - 1;
         foundPiece = false;
         while (i >= 0 && !foundPiece) {
-            Position newPosition = new Position(i, startColumn);
-            Piece pieceAt = board.getPieceAt(newPosition);
+            Piece pieceAt = board.getPieceAt(i, startColumn);
             foundPiece = pieceAt != null;
             if (!foundPiece || pieceAt.isColorWhite() != isColorWhite()) {
-                moves.add(new DefaultMove(this, newPosition));
+                moves.add(new DefaultMove(this, new Position(i, startColumn)));
             }
             i--;
         }
