@@ -134,6 +134,8 @@ public class BoardState {
             Position newPosition = piecePositionPair.snd.snd;
             Piece currentPieceAtNewPosition = getPieceAt(newPosition);
 
+            assert getPieceAt(oldPosition).equals(pieceToMove);
+
             oldPiecePositions.add(new Pair<>(pieceToMove, oldPosition));
             oldPiecePositions.add(new Pair<>(currentPieceAtNewPosition, newPosition));
 
