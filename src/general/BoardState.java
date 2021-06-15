@@ -40,46 +40,46 @@ public class BoardState {
 
         // bottom white row;
         int bottomRow = 0;
-        boardState.addPiece(new Rook(true, boardState.availableId), new Position( 0,bottomRow));
-        boardState.addPiece(new Knight(true, boardState.availableId), new Position( 1,bottomRow));
-        boardState.addPiece(new Bishop(true, boardState.availableId), new Position( 2,bottomRow));
-        boardState.addPiece(new Queen(true, boardState.availableId), new Position( 3,bottomRow));
-        boardState.addPiece(new King(true, boardState.availableId), new Position( 4,bottomRow));
-        boardState.addPiece(new Bishop(true, boardState.availableId), new Position( 5,bottomRow));
-        boardState.addPiece(new Knight(true, boardState.availableId), new Position( 6,bottomRow));
-        boardState.addPiece(new Rook(true, boardState.availableId), new Position( 7,bottomRow));
+        boardState.addPiece(new Rook(true, boardState.availableId), new Position(0, bottomRow));
+        boardState.addPiece(new Knight(true, boardState.availableId), new Position(1, bottomRow));
+        boardState.addPiece(new Bishop(true, boardState.availableId), new Position(2, bottomRow));
+        boardState.addPiece(new Queen(true, boardState.availableId), new Position(3, bottomRow));
+        boardState.addPiece(new King(true, boardState.availableId), new Position(4, bottomRow));
+        boardState.addPiece(new Bishop(true, boardState.availableId), new Position(5, bottomRow));
+        boardState.addPiece(new Knight(true, boardState.availableId), new Position(6, bottomRow));
+        boardState.addPiece(new Rook(true, boardState.availableId), new Position(7, bottomRow));
 
         // second white row
         int secondRow = 1;
-        boardState.addPiece(new Pawn(true, boardState.availableId), new Position( 0,secondRow));
-        boardState.addPiece(new Pawn(true, boardState.availableId), new Position( 1,secondRow));
-        boardState.addPiece(new Pawn(true, boardState.availableId), new Position( 2,secondRow));
-        boardState.addPiece(new Pawn(true, boardState.availableId), new Position( 3,secondRow));
-        boardState.addPiece(new Pawn(true, boardState.availableId), new Position( 4,secondRow));
-        boardState.addPiece(new Pawn(true, boardState.availableId), new Position( 5,secondRow));
-        boardState.addPiece(new Pawn(true, boardState.availableId), new Position( 6,secondRow));
-        boardState.addPiece(new Pawn(true, boardState.availableId), new Position( 7,secondRow));
+        boardState.addPiece(new Pawn(true, boardState.availableId), new Position(0, secondRow));
+        boardState.addPiece(new Pawn(true, boardState.availableId), new Position(1, secondRow));
+        boardState.addPiece(new Pawn(true, boardState.availableId), new Position(2, secondRow));
+        boardState.addPiece(new Pawn(true, boardState.availableId), new Position(3, secondRow));
+        boardState.addPiece(new Pawn(true, boardState.availableId), new Position(4, secondRow));
+        boardState.addPiece(new Pawn(true, boardState.availableId), new Position(5, secondRow));
+        boardState.addPiece(new Pawn(true, boardState.availableId), new Position(6, secondRow));
+        boardState.addPiece(new Pawn(true, boardState.availableId), new Position(7, secondRow));
 
         int secondLastRow = 6;
-        boardState.addPiece(new Pawn(false, boardState.availableId), new Position( 0,secondLastRow));
-        boardState.addPiece(new Pawn(false, boardState.availableId), new Position( 1,secondLastRow));
-        boardState.addPiece(new Pawn(false, boardState.availableId), new Position( 2,secondLastRow));
-        boardState.addPiece(new Pawn(false, boardState.availableId), new Position( 3,secondLastRow));
-        boardState.addPiece(new Pawn(false, boardState.availableId), new Position( 4,secondLastRow));
-        boardState.addPiece(new Pawn(false, boardState.availableId), new Position( 5,secondLastRow));
-        boardState.addPiece(new Pawn(false, boardState.availableId), new Position( 6,secondLastRow));
-        boardState.addPiece(new Pawn(false, boardState.availableId), new Position( 7,secondLastRow));
+        boardState.addPiece(new Pawn(false, boardState.availableId), new Position(0, secondLastRow));
+        boardState.addPiece(new Pawn(false, boardState.availableId), new Position(1, secondLastRow));
+        boardState.addPiece(new Pawn(false, boardState.availableId), new Position(2, secondLastRow));
+        boardState.addPiece(new Pawn(false, boardState.availableId), new Position(3, secondLastRow));
+        boardState.addPiece(new Pawn(false, boardState.availableId), new Position(4, secondLastRow));
+        boardState.addPiece(new Pawn(false, boardState.availableId), new Position(5, secondLastRow));
+        boardState.addPiece(new Pawn(false, boardState.availableId), new Position(6, secondLastRow));
+        boardState.addPiece(new Pawn(false, boardState.availableId), new Position(7, secondLastRow));
 
 
         int topRow = 7;
-        boardState.addPiece(new Rook(false, boardState.availableId), new Position( 0,topRow));
-        boardState.addPiece(new Knight(false, boardState.availableId), new Position( 1,topRow));
-        boardState.addPiece(new Bishop(false, boardState.availableId), new Position( 2,topRow));
-        boardState.addPiece(new Queen(false, boardState.availableId), new Position( 3,topRow));
-        boardState.addPiece(new King(false, boardState.availableId), new Position( 4,topRow));
-        boardState.addPiece(new Bishop(false, boardState.availableId), new Position( 5,topRow));
-        boardState.addPiece(new Knight(false, boardState.availableId), new Position( 6,topRow));
-        boardState.addPiece(new Rook(false, boardState.availableId), new Position( 7,topRow));
+        boardState.addPiece(new Rook(false, boardState.availableId), new Position(0, topRow));
+        boardState.addPiece(new Knight(false, boardState.availableId), new Position(1, topRow));
+        boardState.addPiece(new Bishop(false, boardState.availableId), new Position(2, topRow));
+        boardState.addPiece(new Queen(false, boardState.availableId), new Position(3, topRow));
+        boardState.addPiece(new King(false, boardState.availableId), new Position(4, topRow));
+        boardState.addPiece(new Bishop(false, boardState.availableId), new Position(5, topRow));
+        boardState.addPiece(new Knight(false, boardState.availableId), new Position(6, topRow));
+        boardState.addPiece(new Rook(false, boardState.availableId), new Position(7, topRow));
 
         return boardState;
     }
@@ -128,10 +128,10 @@ public class BoardState {
     }
 
     public void executeMove(Move move) {
-        List<Pair<Piece, Pair<Position, Position>>> piecesToMove = move.getPiecesToMove();
 
         List<Pair<Piece, Position>> oldPiecePositions = new ArrayList<>();
 
+        List<Pair<Piece, Pair<Position, Position>>> piecesToMove = move.getPiecesToMove();
         for (Pair<Piece, Pair<Position, Position>> piecePositionPair : piecesToMove) {
             Piece pieceToMove = piecePositionPair.fst;
             Position oldPosition = piecePositionPair.snd.fst;
@@ -149,13 +149,42 @@ public class BoardState {
             }
             displacePiece(pieceToMove, oldPosition, newPosition);
         }
-        ReverseMove newReverseMove = new ReverseMove(oldPiecePositions);
+
+        Pair<Piece, Position> pieceToCreateAtPosition = move.getPieceToCreate();
+        if (pieceToCreateAtPosition != null) {
+            Piece newPiece = pieceToCreateAtPosition.fst;
+            Position newPosition = pieceToCreateAtPosition.snd;
+            if (newPiece.isColorWhite()) {
+                whitePiecesOnBoard.add(newPiece);
+            } else {
+                blackPiecesOnBoard.add(newPiece);
+            }
+
+            putPieceOnPosition(newPosition, newPiece);
+        }
+
+        Pair<Piece, Position> pieceToRemoveAtPosition = move.getPieceToCreate();
+        if (pieceToRemoveAtPosition != null) {
+            Piece newPiece = pieceToRemoveAtPosition.fst;
+            Position newPosition = pieceToRemoveAtPosition.snd;
+            if (newPiece.isColorWhite()) {
+                assert whitePiecesOnBoard.contains(newPiece);
+                whitePiecesOnBoard.remove(newPiece);
+            } else {
+                assert blackPiecesOnBoard.contains(newPiece);
+                blackPiecesOnBoard.add(newPiece);
+            }
+
+            putPieceOnPosition(newPosition, newPiece);
+        }
+
+        ReverseMove newReverseMove = new ReverseMove(oldPiecePositions, null);
         moveHistory.add(newReverseMove);
     }
 
     public void revertLastMove() {
         ReverseMove lastMove = moveHistory.get(moveHistory.size() - 1);
-        for (Pair<Piece, Position> piecePositionPair : lastMove.previousPiecePositions) {
+        for (Pair<Piece, Position> piecePositionPair : lastMove.previousPiecePositionsDisplacements) {
             putPieceOnPosition(piecePositionPair.snd, piecePositionPair.fst);
         }
         moveHistory.remove(moveHistory.size() - 1);
@@ -240,10 +269,12 @@ public class BoardState {
     }
 
     private static class ReverseMove {
-        private final List<Pair<Piece, Position>> previousPiecePositions;
+        private final List<Pair<Piece, Position>> previousPiecePositionsDisplacements;
+        private final Pair<Piece, Position> createdPiece;
 
-        public ReverseMove(List<Pair<Piece, Position>> previousPiecePositions) {
-            this.previousPiecePositions = previousPiecePositions;
+        public ReverseMove(List<Pair<Piece, Position>> previousPiecePositionsDisplacements, Pair<Piece, Position> createdPiece) {
+            this.previousPiecePositionsDisplacements = previousPiecePositionsDisplacements;
+            this.createdPiece = createdPiece;
         }
     }
 }

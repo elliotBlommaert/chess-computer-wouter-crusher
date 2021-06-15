@@ -24,6 +24,16 @@ public class DefaultMove extends Move {
     }
 
     @Override
+    public Pair<Piece, Position> getPieceToCreate() {
+        return null;
+    }
+
+    @Override
+    public Pair<Piece, Position> getPieceToRemove() {
+        return null;
+    }
+
+    @Override
     public String toString() {
         return pieceToMove.getDrawingCharacter() + " " + oldPosition.toString() + "->" + newPosition.toString();
     }
