@@ -13,17 +13,19 @@ public class main {
 
     public static void main(String[] args) {
         BoardState boardState = BoardState.getDefaultStartBoard();
-        Piece knight = boardState.getPieceAt(1,0);
+        Piece pawn = boardState.getPieceAt(1,1);
+        boardState.addPiece(new Pawn(false, 100), new Position(2, 2));
+        boardState.addPiece(new Pawn(false, 101), new Position(0, 2));
 
-
-        List<Move> possibleMoves = knight.getPossibleMoves(boardState, new Position(1, 0));
+        List<Move> possibleMoves = pawn.getPossibleMoves(boardState, new Position(1, 1));
 
         for (Move possibleMove : possibleMoves) {
+            System.out.println(possibleMove);
             boardState.executeMove(possibleMove);
             System.out.println(boardState);
             boardState.revertLastMove();
             System.out.println(boardState);
-            System.out.println("----------------------------");
+            System.out.println("---------------------------------------");
         }
 
 
