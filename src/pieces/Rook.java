@@ -25,6 +25,8 @@ public class Rook extends Piece {
 
     @Override
     public List<Move> getPossibleMoves(BoardState board, Position position) {
+        assert board.getPieceAt(position).equals(this);
+
         List<Move> moves = new ArrayList<>();
         int startRow = position.getRow();
         int startColumn = position.getColumn();

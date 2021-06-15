@@ -22,6 +22,8 @@ public class King extends Piece {
 
     @Override
     public List<Move> getPossibleMoves(BoardState board, Position position) {
+        assert board.getPieceAt(position).equals(this);
+
         return null;
     }
 }
