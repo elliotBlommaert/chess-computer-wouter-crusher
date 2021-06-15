@@ -7,28 +7,25 @@ import pieces.*;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.setExtractBareNamePropertyMethods;
 
 public class main {
 
 
     public static void main(String[] args) {
-        BoardState boardState = new BoardState();
-        Piece piece = new King(true, 1);
-        boardState.addPiece(piece, new Position(2, 2));
-        boardState.addPiece(new Pawn(false,0), new Position(1, 1));
+        BoardState boardState = BoardState.getDefaultStartBoard();
+        Piece pawn = boardState.getPieceAt(1,1);
+        boardState.addPiece(new Pawn(false, 100), new Position(2, 2));
+        boardState.addPiece(new Pawn(true, 101), new Position(0, 2));
 
-
-        List<Move> possibleMoves = piece.getPossibleMoves(boardState, new Position(2, 2));
-        System.out.println(possibleMoves);
-        System.out.println(boardState);
+        List<Move> possibleMoves = pawn.getPossibleMoves(boardState, new Position(1, 1));
 
         for (Move possibleMove : possibleMoves) {
+            System.out.println(possibleMove);
             boardState.executeMove(possibleMove);
             System.out.println(boardState);
             boardState.revertLastMove();
             System.out.println(boardState);
-            System.out.println("----------------------------");
+            System.out.println("---------------------------------------");
         }
 
 
