@@ -97,19 +97,19 @@ public class BoardState {
         return boardState;
     }
 
-    public boolean isWhiteCanQueenSideCastle() {
+    public boolean whiteCanQueenSideCastle() {
         return whiteCanQueenSideCastle;
     }
 
-    public boolean isWhiteCanKingSideCastle() {
+    public boolean whiteCanKingSideCastle() {
         return whiteCanKingSideCastle;
     }
 
-    public boolean isBlackCanQueenSideCastle() {
+    public boolean blackCanQueenSideCastle() {
         return blackCanQueenSideCastle;
     }
 
-    public boolean isBlackCanKingSideCastle() {
+    public boolean blackCanKingSideCastle() {
         return blackCanKingSideCastle;
     }
 
@@ -203,8 +203,8 @@ public class BoardState {
             createdPiece = new Pair<>(newPiece, newPosition);
         }
 
-
-        ReverseMove newReverseMove = new ReverseMove(displacedPiecesOldPositions, createdPiece, removedPieces);
+        int previousEnPassantColumn = whiteToMove ? blackCanEnPassantToColumn : whiteCanEnPassantToColumn;
+        ReverseMove newReverseMove = new ReverseMove(displacedPiecesOldPositions, createdPiece, removedPieces, previousEnPassantColumn);
         moveHistory.add(newReverseMove);
 
         if (whiteToMove) {
@@ -255,6 +255,7 @@ public class BoardState {
         }
 
         if (whiteToMove) {
+            blackCanEnPassantToColumn = lastMove.previousEnPassantColumn;
             if (lastMove.disallowedQueenSideCastle) {
                 whiteCanQueenSideCastle = true;
             } else if (lastMove.disallowedKingSideCastle) {
@@ -262,6 +263,7 @@ public class BoardState {
             }
         }
         if (!whiteToMove) {
+            whiteCanEnPassantToColumn = lastMove.previousEnPassantColumn;
             if (lastMove.disallowedQueenSideCastle) {
                 blackCanQueenSideCastle = true;
             } else if (lastMove.disallowedKingSideCastle) {
@@ -339,12 +341,12 @@ public class BoardState {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BoardState that = (BoardState) o;
-        return whiteToMove == that.whiteToMove && Objects.equals(pieces, that.pieces) && Objects.equals(whitePiecesOnBoard, that.whitePiecesOnBoard) && Objects.equals(blackPiecesOnBoard, that.blackPiecesOnBoard) && Objects.equals(moveHistory, that.moveHistory);
+        return whiteToMove == that.whiteToMove && availableId == that.availableId && whiteCanEnPassantToColumn == that.whiteCanEnPassantToColumn && blackCanEnPassantToColumn == that.blackCanEnPassantToColumn && whiteCanQueenSideCastle == that.whiteCanQueenSideCastle && whiteCanKingSideCastle == that.whiteCanKingSideCastle && blackCanQueenSideCastle == that.blackCanQueenSideCastle && blackCanKingSideCastle == that.blackCanKingSideCastle && Objects.equals(pieces, that.pieces) && Objects.equals(whitePiecesOnBoard, that.whitePiecesOnBoard) && Objects.equals(blackPiecesOnBoard, that.blackPiecesOnBoard) && Objects.equals(moveHistory, that.moveHistory);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(whiteToMove, pieces, whitePiecesOnBoard, blackPiecesOnBoard, moveHistory);
+        return Objects.hash(whiteToMove, availableId, pieces, whitePiecesOnBoard, blackPiecesOnBoard, moveHistory, whiteCanEnPassantToColumn, blackCanEnPassantToColumn, whiteCanQueenSideCastle, whiteCanKingSideCastle, blackCanQueenSideCastle, blackCanKingSideCastle);
     }
 
     public boolean canEnPassantToColumn(boolean colorWhite, int column) {
@@ -355,17 +357,21 @@ public class BoardState {
         }
     }
 
+
+
     private static class ReverseMove {
         private final List<Pair<Piece, Pair<Position, Position>>> displacedPiecesWithOldPosition;
         private final Pair<Piece, Position> createdPiece;
         private final List<Pair<Piece, Position>> removedPieces;
         private final boolean disallowedQueenSideCastle;
         private final boolean disallowedKingSideCastle;
+        private final int previousEnPassantColumn;
 
-        public ReverseMove(List<Pair<Piece, Pair<Position, Position>>> displacedPiecesWithOldPosition, Pair<Piece, Position> createdPiece, List<Pair<Piece, Position>> removedPieces) {
+        public ReverseMove(List<Pair<Piece, Pair<Position, Position>>> displacedPiecesWithOldPosition, Pair<Piece, Position> createdPiece, List<Pair<Piece, Position>> removedPieces, int previousEnPassantColumn) {
             this.displacedPiecesWithOldPosition = displacedPiecesWithOldPosition;
             this.createdPiece = createdPiece;
             this.removedPieces = removedPieces;
+            this.previousEnPassantColumn = previousEnPassantColumn;
             disallowedQueenSideCastle = false;
             disallowedKingSideCastle = false;
         }

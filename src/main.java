@@ -17,30 +17,16 @@ public class main {
 
         // white pawn
         boardState.executeMove(
-                new DefaultMove(boardState.getPieceAt(2, 1), new Position(2, 1), new Position(3, 2))
+                new DefaultMove(boardState.getPieceAt(2, 1), new Position(2, 1), new Position(2, 4))
         );
-        // black queen move
+        // black pawn move
         boardState.executeMove(
-                new DefaultMove(boardState.getPieceAt(3, 7), new Position(3, 7), new Position(5, 5))
-        );
-        // white pawn
-        boardState.executeMove(
-                new DefaultMove(boardState.getPieceAt(1, 1), new Position(1, 1), new Position(1, 2))
-        );
-        // black bishop
-        boardState.executeMove(
-                new DefaultMove(boardState.getPieceAt(2, 7), new Position(2, 7), new Position(0, 2))
-        );
-        // white pawn
-        boardState.executeMove(
-                new DefaultMove(boardState.getPieceAt(1, 2), new Position(1, 2), new Position(1, 3))
-        );
-        // black knight
-        boardState.executeMove(
-                new DefaultMove(boardState.getPieceAt(1, 7), new Position(1, 7), new Position(3, 3))
+                new AdvanceTwoMove(boardState.getPieceAt(3, 6), new Position(3, 6), new Position(3, 4))
         );
 
-        List<Move> possibleMoves = boardState.getPieceAt(4, 7).getPossibleMoves(boardState, new Position(4, 7));
+        boardState.revertLastMove();
+
+        List<Move> possibleMoves = boardState.getPieceAt(2, 4).getPossibleMoves(boardState, new Position(2, 4));
 
         for (Move possibleMove : possibleMoves) {
             System.out.println(possibleMove);

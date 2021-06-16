@@ -102,13 +102,16 @@ public class King extends Piece {
 
         // TODO: Check checks
         int row = colorWhite ? 0 : 7;
-        if (board.isWhiteCanQueenSideCastle()) {
+        boolean canQueenSideCastle = colorWhite ? board.whiteCanQueenSideCastle() : board.blackCanQueenSideCastle();
+        boolean canKingSideCastle = colorWhite ? board.whiteCanKingSideCastle() : board.blackCanKingSideCastle();
+
+        if (canQueenSideCastle) {
             if (board.getPieceAt(1, row) == null && board.getPieceAt(2, row) == null && board.getPieceAt(3, row) == null) {
                 Piece rook = board.getPieceAt(0, row);
                 moves.add(new CastlingMove(this, rook, true));
             }
         }
-        if (board.isWhiteCanKingSideCastle()) {
+        if (canKingSideCastle) {
             if (board.getPieceAt(5, row) == null && board.getPieceAt(6, row) == null) {
                 Piece rook = board.getPieceAt(7, row);
                 moves.add(new CastlingMove(this, rook, false));
