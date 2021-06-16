@@ -94,7 +94,7 @@ public class Knight extends Piece {
 
         int downRightColumn = column + 1;
         int downRightRow = row - 2;
-        if (downRightRow >= 0 && downRightColumn >= 0) {
+        if (downRightRow >= 0 && downRightColumn < 8) {
             Piece pieceAtTarget = board.getPieceAt(downRightColumn, downRightRow);
             if (pieceAtTarget == null || this.colorWhite != pieceAtTarget.colorWhite) {
                 DefaultMove newMove = new DefaultMove(this, position, new Position(downRightColumn, downRightRow));
@@ -104,7 +104,7 @@ public class Knight extends Piece {
 
         int rightDownColumn = column + 2;
         int rightDownRow = row - 1;
-        if (rightDownRow >= 0 && rightDownColumn >= 0) {
+        if (rightDownRow >= 0 && rightDownColumn < 8) {
             Piece pieceAtTarget = board.getPieceAt(rightDownColumn, rightDownRow);
             if (pieceAtTarget == null || this.colorWhite != pieceAtTarget.colorWhite) {
                 DefaultMove newMove = new DefaultMove(this, position, new Position(rightDownColumn, rightDownRow));

@@ -24,7 +24,7 @@ public class Queen extends Piece {
     }
 
     @Override
-    public List<Move> getPossibleMoves(BoardState board, Position position) {
+    protected List<Move> getPossibleMoves(BoardState board, Position position) {
         assert board.getPieceAt(position).equals(this);
 
         List<Move> moves = new ArrayList<>();
@@ -34,10 +34,10 @@ public class Queen extends Piece {
         int i = startColumn + 1;
         boolean foundPiece = false;
         while (i < 8 && !foundPiece) {
-            Piece pieceAt = board.getPieceAt(startRow, i);
+            Piece pieceAt = board.getPieceAt(i, startRow);
             foundPiece = pieceAt != null;
             if (!foundPiece || pieceAt.colorWhite != this.colorWhite) {
-                moves.add(new DefaultMove(this, position, new Position(startRow, i)));
+                moves.add(new DefaultMove(this, position, new Position(i, startRow)));
             }
             i++;
         }
@@ -45,10 +45,10 @@ public class Queen extends Piece {
         i = startColumn - 1;
         foundPiece = false;
         while (i >= 0 && !foundPiece) {
-            Piece pieceAt = board.getPieceAt(startRow, i);
+            Piece pieceAt = board.getPieceAt(i, startRow);
             foundPiece = pieceAt != null;
             if (!foundPiece || pieceAt.colorWhite != this.colorWhite) {
-                moves.add(new DefaultMove(this, position, new Position(startRow, i)));
+                moves.add(new DefaultMove(this, position, new Position(i, startRow)));
             }
             i--;
         }
@@ -56,10 +56,10 @@ public class Queen extends Piece {
         i = startRow + 1;
         foundPiece = false;
         while (i < 8 && !foundPiece) {
-            Piece pieceAt = board.getPieceAt(i, startColumn);
+            Piece pieceAt = board.getPieceAt(startColumn, i);
             foundPiece = pieceAt != null;
             if (!foundPiece || pieceAt.colorWhite != this.colorWhite) {
-                moves.add(new DefaultMove(this, position, new Position(i, startColumn)));
+                moves.add(new DefaultMove(this, position, new Position(startColumn, i)));
             }
             i++;
         }
@@ -67,10 +67,10 @@ public class Queen extends Piece {
         i = startRow - 1;
         foundPiece = false;
         while (i >= 0 && !foundPiece) {
-            Piece pieceAt = board.getPieceAt(i, startColumn);
+            Piece pieceAt = board.getPieceAt(startColumn, i);
             foundPiece = pieceAt != null;
             if (!foundPiece || pieceAt.colorWhite != this.colorWhite) {
-                moves.add(new DefaultMove(this, position, new Position(i, startColumn)));
+                moves.add(new DefaultMove(this, position, new Position(startColumn, i)));
             }
             i--;
         }

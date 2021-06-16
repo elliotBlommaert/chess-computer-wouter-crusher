@@ -67,7 +67,7 @@ public class Rook extends Piece {
         i = startRow - 1;
         foundPiece = false;
         while (i >= 0 && !foundPiece) {
-            Piece pieceAt = board.getPieceAt(i, startColumn);
+            Piece pieceAt = board.getPieceAt(startColumn, i);
             foundPiece = pieceAt != null;
             if (!foundPiece || pieceAt.isColorWhite() != isColorWhite()) {
                 moves.add(new DefaultMove(this, position, new Position(startColumn, i)));
