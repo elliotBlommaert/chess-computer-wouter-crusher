@@ -41,11 +41,23 @@ public abstract class Piece {
 
     public abstract List<Move> getPossibleMoves(BoardState board, Position position);
 
+    public List<Move> getValidMovesIfChecked(BoardState board, Position position, CheckedData checkedData) {
+        // Dummy code
+        return getPossibleMoves(board, position);
+    }
+
     public List<Move> getValidMoves(BoardState board, Position position) {
-        List<Move> possibleMoves = getPossibleMoves(board, position);
+        boolean whiteToMove = board.whiteToMove();
+        List<Move> possibleMoves = new ArrayList<>();
+        CheckedData checked = board.isChecked(whiteToMove);
+        if (checked != null) {
+            possibleMoves.addAll(getValidMovesIfChecked(board, position, checked));
+        } else {
+            possibleMoves.addAll(getPossibleMoves(board, position));
+        }
+
         List<Move> validMoves = new ArrayList<>();
         for (Move possibleMove : possibleMoves) {
-            boolean whiteToMove = board.whiteToMove();
             board.executeMove(possibleMove);
             if (board.isChecked(whiteToMove) ==  null) {
                 validMoves.add(possibleMove);

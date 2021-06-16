@@ -35,10 +35,10 @@ public class Rook extends Piece {
         int i = startColumn + 1;
         boolean foundPiece = false;
         while (i < 8 && !foundPiece) {
-            Piece pieceAt = board.getPieceAt(startRow, i);
+            Piece pieceAt = board.getPieceAt(i, startRow);
             foundPiece = pieceAt != null;
             if (!foundPiece || pieceAt.isColorWhite() != isColorWhite()) {
-                moves.add(new DefaultMove(this, position, new Position(startRow, i)));
+                moves.add(new DefaultMove(this, position, new Position(i, startRow)));
             }
             i++;
         }
@@ -46,10 +46,10 @@ public class Rook extends Piece {
         i = startColumn - 1;
         foundPiece = false;
         while (i >= 0 && !foundPiece) {
-            Piece pieceAt = board.getPieceAt(startRow, i);
+            Piece pieceAt = board.getPieceAt(i, startRow);
             foundPiece = pieceAt != null;
             if (!foundPiece || pieceAt.isColorWhite() != isColorWhite()) {
-                moves.add(new DefaultMove(this, position, new Position(startRow, i)));
+                moves.add(new DefaultMove(this, position, new Position(i, startRow)));
             }
             i--;
         }
@@ -57,10 +57,10 @@ public class Rook extends Piece {
         i = startRow + 1;
         foundPiece = false;
         while (i < 8 && !foundPiece) {
-            Piece pieceAt = board.getPieceAt(i, startColumn);
+            Piece pieceAt = board.getPieceAt(startColumn, i);
             foundPiece = pieceAt != null;
             if (!foundPiece || pieceAt.isColorWhite() != isColorWhite()) {
-                moves.add(new DefaultMove(this, position, new Position(i, startColumn)));
+                moves.add(new DefaultMove(this, position, new Position(startColumn, i)));
             }
             i++;
         }
@@ -71,7 +71,7 @@ public class Rook extends Piece {
             Piece pieceAt = board.getPieceAt(i, startColumn);
             foundPiece = pieceAt != null;
             if (!foundPiece || pieceAt.isColorWhite() != isColorWhite()) {
-                moves.add(new DefaultMove(this, position, new Position(i, startColumn)));
+                moves.add(new DefaultMove(this, position, new Position(startColumn, i)));
             }
             i--;
         }
