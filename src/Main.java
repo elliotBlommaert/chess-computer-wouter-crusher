@@ -16,7 +16,7 @@ public class Main {
         BoardState boardState = new BoardState();
 
         boardState.addPiece(new King(false, 1), new Position(3,4));
-        boardState.addPiece(new Pawn(true, 2), new Position(2,3));
+        boardState.addPiece(new King(true, 2), new Position(2,3));
 
         boardState.isChecked(false);
         int i = 0;

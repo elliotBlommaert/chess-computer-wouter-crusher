@@ -154,6 +154,7 @@ public class BoardState {
 
             newColumn += directionColumnIncrement;
             newRow += directionRowIncrement;
+
             while (newColumn < 8 && newColumn >= 0 && newRow < 8 && newRow >= 0) {
                 Piece pieceAt = getPieceAt(newColumn, newRow);
                 currentMaybeResolvingCheckPositions.add(new Position(newColumn, newRow));
@@ -261,6 +262,33 @@ public class BoardState {
                 checkPositions.add(new Position(rightPawnColumn, rightPawnRow));
             }
         }
+
+        List<Pair<Integer, Integer>> kingCheckIncrements = Arrays.asList(
+                new Pair<>(1, 0),
+                new Pair<>(-1, 0),
+                new Pair<>(0, -1),
+                new Pair<>(0, 1),
+
+                new Pair<>(1, 1),
+                new Pair<>(-1, 1),
+                new Pair<>(1, -1),
+                new Pair<>(-1, -1)
+        );
+        for (Pair<Integer, Integer> kingCheckIncrement : kingCheckIncrements) {
+            int newColumn = kingColumn + kingCheckIncrement.fst;
+            int newRow = kingRow + kingCheckIncrement.snd;
+
+            if (newColumn < 8 && newColumn >= 0 && newRow < 8 && newRow >= 0) {
+                Piece pieceAt = getPieceAt(newColumn, newRow);
+                if (pieceAt != null && pieceAt.isColorWhite() != isWhite && pieceAt instanceof King) {
+                    if (!checkPositions.isEmpty()) {
+                        return new CheckedData(Collections.emptyList());
+                    }
+                    checkPositions.add(new Position(newColumn, newRow));
+                }
+            }
+        }
+
 
         if (checkPositions.isEmpty()) {
             return null;
