@@ -71,6 +71,6 @@ public class Position {
     @Override
     public String toString() {
         String columns = "ABCDEFGH";
-        return Integer.toString(row + 1) + columns.charAt(column);
+        return columns.charAt(column) + Integer.toString(row + 1);
     }
 }

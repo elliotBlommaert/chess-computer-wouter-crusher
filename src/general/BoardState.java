@@ -121,6 +121,172 @@ public class BoardState {
         return pieces.get(column).get(row);
     }
 
+//    public List<Move> getAllPossibleMoves() {
+//        if (isChecked(whiteToMove)) {
+//            return getPossibleMovesForCheck()
+//        } else {
+//
+//        }
+//        return null;
+//    }
+
+    public CheckedData isChecked(boolean isWhite) {
+        Position kingPosition = findKingPosition(isWhite);
+        List<Position> checkPositions = new ArrayList<>();
+
+        List<Pair<Integer, Integer>> horizontalAndVerticalDirections = Arrays.asList(
+                new Pair<>(0, 1),
+                new Pair<>(0, -1),
+                new Pair<>(-1, 0),
+                new Pair<>(1, 0)
+        );
+
+        int kingColumn = kingPosition.getColumn();
+        int kingRow = kingPosition.getRow();
+
+        for (Pair<Integer, Integer> direction : horizontalAndVerticalDirections) {
+            int newColumn = kingColumn;
+            int newRow = kingRow;
+
+            List<Position> currentMaybeResolvingCheckPositions = new ArrayList<>();
+            int directionColumnIncrement = direction.fst;
+            int directionRowIncrement = direction.snd;
+
+            newColumn += directionColumnIncrement;
+            newRow += directionRowIncrement;
+            while (newColumn < 8 && newColumn >= 0 && newRow < 8 && newRow >= 0) {
+                Piece pieceAt = getPieceAt(newColumn, newRow);
+                currentMaybeResolvingCheckPositions.add(new Position(newColumn, newRow));
+                if (pieceAt != null) {
+                    if (pieceAt.isColorWhite() != isWhite && (pieceAt instanceof Queen || pieceAt instanceof Rook)) {
+                        if (!checkPositions.isEmpty()) {
+                            return new CheckedData(Collections.emptyList());
+                        }
+                        checkPositions.addAll(currentMaybeResolvingCheckPositions);
+                    }
+                    break;
+                }
+                newColumn += directionColumnIncrement;
+                newRow += directionRowIncrement;
+            }
+        }
+
+        List<Pair<Integer, Integer>> diagonalDirections = Arrays.asList(
+                new Pair<>(1, 1),
+                new Pair<>(-1, 1),
+                new Pair<>(1, -1),
+                new Pair<>(-1, -1)
+        );
+        for (Pair<Integer, Integer> direction : diagonalDirections) {
+            int newColumn = kingColumn;
+            int newRow = kingRow;
+            List<Position> currentMaybeResolvingCheckPositions = new ArrayList<>();
+            int directionColumnIncrement = direction.fst;
+            int directionRowIncrement = direction.snd;
+
+            newColumn += directionColumnIncrement;
+            newRow += directionRowIncrement;
+            while (newColumn < 8 && newColumn >= 0 && newRow < 8 && newRow >= 0) {
+                Piece pieceAt = getPieceAt(newColumn, newRow);
+                currentMaybeResolvingCheckPositions.add(new Position(newColumn, newRow));
+                if (pieceAt != null) {
+                    if (pieceAt.isColorWhite() != isWhite && (pieceAt instanceof Queen || pieceAt instanceof Bishop)) {
+                        if (!checkPositions.isEmpty()) {
+                            return new CheckedData(Collections.emptyList());
+                        }
+                        checkPositions.addAll(currentMaybeResolvingCheckPositions);
+                    }
+                    break;
+                }
+                newColumn += directionColumnIncrement;
+                newRow += directionRowIncrement;
+            }
+        }
+
+        List<Pair<Integer, Integer>> knightDirections = Arrays.asList(
+                new Pair<>(2, 1),
+                new Pair<>(1, 2),
+
+                new Pair<>(-2, 1),
+                new Pair<>(-1, 2),
+
+                new Pair<>(2, -1),
+                new Pair<>(1, -2),
+
+                new Pair<>(-2, -1),
+                new Pair<>(-1, -2)
+        );
+
+        for (Pair<Integer, Integer> knightDirection : knightDirections) {
+            int newColumn = knightDirection.fst + kingColumn;
+            int newRow = knightDirection.snd + kingRow;
+            if (newColumn < 8 && newColumn >= 0 && newRow < 8 && newRow >= 0) {
+                Piece pieceAt = getPieceAt(newColumn, newRow);
+                if (pieceAt != null && pieceAt.isColorWhite() != isWhite && pieceAt instanceof Knight) {
+                    if (!checkPositions.isEmpty()) {
+                        return new CheckedData(Collections.emptyList());
+                    }
+
+                    checkPositions.add(new Position(newColumn, newRow));
+                }
+            }
+        }
+
+        int checkPawnDirection = isWhite ? 1 : -1;
+
+        int leftPawnColumn = kingColumn - 1;
+        int leftPawnRow = kingRow + checkPawnDirection;
+        if (leftPawnColumn >= 0 && leftPawnRow < 8 && leftPawnRow >= 0) {
+            Piece pieceAt = getPieceAt(leftPawnColumn, leftPawnRow);
+
+            if (pieceAt != null && pieceAt.isColorWhite() != isWhite && pieceAt instanceof Pawn) {
+                if (!checkPositions.isEmpty()) {
+                    return new CheckedData(Collections.emptyList());
+                }
+
+                checkPositions.add(new Position(leftPawnColumn, leftPawnRow));
+            }
+        }
+
+        int rightPawnColumn = kingColumn + 1;
+        int rightPawnRow = kingRow + checkPawnDirection;
+        if (rightPawnColumn < 8 && rightPawnRow < 8 && rightPawnRow >= 0) {
+            Piece pieceAt = getPieceAt(rightPawnColumn, rightPawnRow);
+
+            if (pieceAt != null && pieceAt.isColorWhite() != isWhite && pieceAt instanceof Pawn) {
+                if (!checkPositions.isEmpty()) {
+                    return new CheckedData(Collections.emptyList());
+                }
+
+                checkPositions.add(new Position(rightPawnColumn, rightPawnRow));
+            }
+        }
+
+        if (checkPositions.isEmpty()) {
+            return null;
+        }
+
+        return new CheckedData(checkPositions);
+    }
+
+    private Position findKingPosition(boolean isWhite) {
+
+        Position kingPosition = null;
+        for (int columnNumber = 0; columnNumber < pieces.size(); columnNumber++) {
+            List<Piece> row = pieces.get(columnNumber);
+            for (int rowNumber = 0; rowNumber < row.size(); rowNumber++) {
+                Piece piece = row.get(rowNumber);
+                if (piece != null && piece.isColorWhite() == isWhite && piece instanceof King) {
+                    assert kingPosition == null;
+                    kingPosition = new Position(columnNumber, rowNumber);
+                }
+            }
+        }
+
+        assert kingPosition != null;
+        return kingPosition;
+    }
+
     public void addPiece(Piece piece, Position position) {
         assert piece != null;
 
@@ -356,7 +522,6 @@ public class BoardState {
             return blackCanEnPassantToColumn == column;
         }
     }
-
 
 
     private static class ReverseMove {

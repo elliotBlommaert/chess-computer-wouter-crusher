@@ -13,30 +13,14 @@ public class Main {
 
     public static void main(String[] args) {
 
-        BoardState boardState = BoardState.getDefaultStartBoard();
+        BoardState boardState = new BoardState();
 
-        // white pawn
-        boardState.executeMove(
-                new DefaultMove(boardState.getPieceAt(2, 1), new Position(2, 1), new Position(2, 4))
-        );
-        // black pawn move
-        boardState.executeMove(
-                new AdvanceTwoMove(boardState.getPieceAt(3, 6), new Position(3, 6), new Position(3, 4))
-        );
+        boardState.addPiece(new King(false, 1), new Position(3,4));
+        boardState.addPiece(new Pawn(true, 2), new Position(2,3));
 
-        boardState.revertLastMove();
+        boardState.isChecked(false);
+        int i = 0;
 
-        List<Move> possibleMoves = boardState.getPieceAt(2, 4).getPossibleMoves(boardState, new Position(2, 4));
-
-        for (Move possibleMove : possibleMoves) {
-            System.out.println(possibleMove);
-            System.out.println(boardState);
-            boardState.executeMove(possibleMove);
-            System.out.println(boardState);
-            boardState.revertLastMove();
-            System.out.println(boardState);
-            System.out.println("---------------------------------------");
-        }
     }
 
 
