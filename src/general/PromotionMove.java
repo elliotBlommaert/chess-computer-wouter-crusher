@@ -3,24 +3,43 @@ package general;
 import com.sun.tools.javac.util.Pair;
 import pieces.Piece;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class PromotionMove extends Move {
 
+    private Piece newPiece;
+    private Piece pawn;
+    private Piece oldPieceAtPosition;
+    private Position newPiecePosition;
+    private Position oldPawnPosition;
 
+    public PromotionMove(Piece newPiece, Piece pawn, Piece oldPieceAtPosition, Position oldPawnPosition, Position newPiecePosition) {
+        this.newPiece = newPiece;
+        this.pawn = pawn;
+        this.oldPieceAtPosition = oldPieceAtPosition;
+        this.oldPawnPosition = oldPawnPosition;
+        this.newPiecePosition = newPiecePosition;
+    }
 
     @Override
     public List<Pair<Piece, Pair<Position, Position>>> getPiecesToMove() {
-        return null;
+        return Collections.emptyList();
     }
 
     @Override
     public Pair<Piece, Position> getPieceToCreate() {
-        return null;
+        return new Pair<>(newPiece, newPiecePosition);
     }
 
     @Override
-    public Pair<Piece, Position> getPieceToRemove() {
-        return null;
+    public List<Pair<Piece, Position>> getPiecesToRemove() {
+        List<Pair<Piece, Position>> piecesToRemove = new ArrayList<>();
+        piecesToRemove.add(new Pair<>(pawn, oldPawnPosition));
+        if (oldPieceAtPosition != null) {
+            piecesToRemove.add(new Pair<>(oldPieceAtPosition, newPiecePosition));
+        }
+        return piecesToRemove;
     }
 }

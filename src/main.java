@@ -12,12 +12,16 @@ public class main {
 
 
     public static void main(String[] args) {
-        BoardState boardState = BoardState.getDefaultStartBoard();
-        Piece pawn = boardState.getPieceAt(1,1);
-        boardState.addPiece(new Pawn(false, 100), new Position(2, 2));
-        boardState.addPiece(new Pawn(true, 101), new Position(0, 2));
 
-        List<Move> possibleMoves = pawn.getPossibleMoves(boardState, new Position(1, 1));
+        System.out.println("\u265B");
+        System.out.println("\u2655");
+        BoardState boardState = new BoardState();
+        Pawn pawn = new Pawn(true, 100);
+        Piece queen = new Queen(false, 101);
+        boardState.addPiece(pawn, new Position(1, 6));
+        boardState.addPiece(queen,new Position(0,7));
+
+        List<Move> possibleMoves = pawn.getPossibleMoves(boardState, new Position(1, 6));
 
         for (Move possibleMove : possibleMoves) {
             System.out.println(possibleMove);

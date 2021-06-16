@@ -36,46 +36,45 @@ public class BoardState {
 
         // bottom white row;
         int bottomRow = 0;
-        boardState.addPiece(new Rook(true, boardState.availableId), new Position(0, bottomRow));
-        boardState.addPiece(new Knight(true, boardState.availableId), new Position(1, bottomRow));
-        boardState.addPiece(new Bishop(true, boardState.availableId), new Position(2, bottomRow));
-        boardState.addPiece(new Queen(true, boardState.availableId), new Position(3, bottomRow));
-        boardState.addPiece(new King(true, boardState.availableId), new Position(4, bottomRow));
-        boardState.addPiece(new Bishop(true, boardState.availableId), new Position(5, bottomRow));
-        boardState.addPiece(new Knight(true, boardState.availableId), new Position(6, bottomRow));
-        boardState.addPiece(new Rook(true, boardState.availableId), new Position(7, bottomRow));
+        boardState.addPiece(new Rook(true, boardState.getIdForNewPieceAndUpdate()), new Position(0, bottomRow));
+        boardState.addPiece(new Knight(true, boardState.getIdForNewPieceAndUpdate()), new Position(1, bottomRow));
+        boardState.addPiece(new Bishop(true, boardState.getIdForNewPieceAndUpdate()), new Position(2, bottomRow));
+        boardState.addPiece(new Queen(true, boardState.getIdForNewPieceAndUpdate()), new Position(3, bottomRow));
+        boardState.addPiece(new King(true, boardState.getIdForNewPieceAndUpdate()), new Position(4, bottomRow));
+        boardState.addPiece(new Bishop(true, boardState.getIdForNewPieceAndUpdate()), new Position(5, bottomRow));
+        boardState.addPiece(new Knight(true, boardState.getIdForNewPieceAndUpdate()), new Position(6, bottomRow));
+        boardState.addPiece(new Rook(true, boardState.getIdForNewPieceAndUpdate()), new Position(7, bottomRow));
 
         // second white row
         int secondRow = 1;
-        boardState.addPiece(new Pawn(true, boardState.availableId), new Position(0, secondRow));
-        boardState.addPiece(new Pawn(true, boardState.availableId), new Position(1, secondRow));
-        boardState.addPiece(new Pawn(true, boardState.availableId), new Position(2, secondRow));
-        boardState.addPiece(new Pawn(true, boardState.availableId), new Position(3, secondRow));
-        boardState.addPiece(new Pawn(true, boardState.availableId), new Position(4, secondRow));
-        boardState.addPiece(new Pawn(true, boardState.availableId), new Position(5, secondRow));
-        boardState.addPiece(new Pawn(true, boardState.availableId), new Position(6, secondRow));
-        boardState.addPiece(new Pawn(true, boardState.availableId), new Position(7, secondRow));
+        boardState.addPiece(new Pawn(true, boardState.getIdForNewPieceAndUpdate()), new Position(0, secondRow));
+        boardState.addPiece(new Pawn(true, boardState.getIdForNewPieceAndUpdate()), new Position(1, secondRow));
+        boardState.addPiece(new Pawn(true, boardState.getIdForNewPieceAndUpdate()), new Position(2, secondRow));
+        boardState.addPiece(new Pawn(true, boardState.getIdForNewPieceAndUpdate()), new Position(3, secondRow));
+        boardState.addPiece(new Pawn(true, boardState.getIdForNewPieceAndUpdate()), new Position(4, secondRow));
+        boardState.addPiece(new Pawn(true, boardState.getIdForNewPieceAndUpdate()), new Position(5, secondRow));
+        boardState.addPiece(new Pawn(true, boardState.getIdForNewPieceAndUpdate()), new Position(6, secondRow));
+        boardState.addPiece(new Pawn(true, boardState.getIdForNewPieceAndUpdate()), new Position(7, secondRow));
 
         int secondLastRow = 6;
-        boardState.addPiece(new Pawn(false, boardState.availableId), new Position(0, secondLastRow));
-        boardState.addPiece(new Pawn(false, boardState.availableId), new Position(1, secondLastRow));
-        boardState.addPiece(new Pawn(false, boardState.availableId), new Position(2, secondLastRow));
-        boardState.addPiece(new Pawn(false, boardState.availableId), new Position(3, secondLastRow));
-        boardState.addPiece(new Pawn(false, boardState.availableId), new Position(4, secondLastRow));
-        boardState.addPiece(new Pawn(false, boardState.availableId), new Position(5, secondLastRow));
-        boardState.addPiece(new Pawn(false, boardState.availableId), new Position(6, secondLastRow));
-        boardState.addPiece(new Pawn(false, boardState.availableId), new Position(7, secondLastRow));
-
+        boardState.addPiece(new Pawn(false, boardState.getIdForNewPieceAndUpdate()), new Position(0, secondLastRow));
+        boardState.addPiece(new Pawn(false, boardState.getIdForNewPieceAndUpdate()), new Position(1, secondLastRow));
+        boardState.addPiece(new Pawn(false, boardState.getIdForNewPieceAndUpdate()), new Position(2, secondLastRow));
+        boardState.addPiece(new Pawn(false, boardState.getIdForNewPieceAndUpdate()), new Position(3, secondLastRow));
+        boardState.addPiece(new Pawn(false, boardState.getIdForNewPieceAndUpdate()), new Position(4, secondLastRow));
+        boardState.addPiece(new Pawn(false, boardState.getIdForNewPieceAndUpdate()), new Position(5, secondLastRow));
+        boardState.addPiece(new Pawn(false, boardState.getIdForNewPieceAndUpdate()), new Position(6, secondLastRow));
+        boardState.addPiece(new Pawn(false, boardState.getIdForNewPieceAndUpdate()), new Position(7, secondLastRow));
 
         int topRow = 7;
-        boardState.addPiece(new Rook(false, boardState.availableId), new Position(0, topRow));
-        boardState.addPiece(new Knight(false, boardState.availableId), new Position(1, topRow));
-        boardState.addPiece(new Bishop(false, boardState.availableId), new Position(2, topRow));
-        boardState.addPiece(new Queen(false, boardState.availableId), new Position(3, topRow));
-        boardState.addPiece(new King(false, boardState.availableId), new Position(4, topRow));
-        boardState.addPiece(new Bishop(false, boardState.availableId), new Position(5, topRow));
-        boardState.addPiece(new Knight(false, boardState.availableId), new Position(6, topRow));
-        boardState.addPiece(new Rook(false, boardState.availableId), new Position(7, topRow));
+        boardState.addPiece(new Rook(false, boardState.getIdForNewPieceAndUpdate()), new Position(0, topRow));
+        boardState.addPiece(new Knight(false, boardState.getIdForNewPieceAndUpdate()), new Position(1, topRow));
+        boardState.addPiece(new Bishop(false, boardState.getIdForNewPieceAndUpdate()), new Position(2, topRow));
+        boardState.addPiece(new Queen(false, boardState.getIdForNewPieceAndUpdate()), new Position(3, topRow));
+        boardState.addPiece(new King(false, boardState.getIdForNewPieceAndUpdate()), new Position(4, topRow));
+        boardState.addPiece(new Bishop(false, boardState.getIdForNewPieceAndUpdate()), new Position(5, topRow));
+        boardState.addPiece(new Knight(false, boardState.getIdForNewPieceAndUpdate()), new Position(6, topRow));
+        boardState.addPiece(new Rook(false, boardState.getIdForNewPieceAndUpdate()), new Position(7, topRow));
 
         return boardState;
     }
@@ -94,10 +93,11 @@ public class BoardState {
         assert getPieceAt(position) == null;
         assert isValid();
 
-        availableId++;
         if (piece.isColorWhite()) {
+            assert !whitePiecesOnBoard.contains(piece);
             whitePiecesOnBoard.add(piece);
         } else {
+            assert !blackPiecesOnBoard.contains(piece);
             blackPiecesOnBoard.add(piece);
         }
         pieces.get(position.getColumn()).set(position.getRow(), piece);
@@ -107,17 +107,19 @@ public class BoardState {
     private void displacePiece(Piece pieceToDisplace, Position fromPosition, Position toPosition) {
         assert pieceToDisplace != null;
 
-        putPieceOnPosition(fromPosition, null);
-        putPieceOnPosition(toPosition, pieceToDisplace);
+        putPieceOnPosition(null, fromPosition);
+        putPieceOnPosition(pieceToDisplace, toPosition);
         assert isValid();
     }
 
     private void removePiece(Piece pieceToRemove, Position position) {
 
-        putPieceOnPosition(position, null);
+        putPieceOnPosition(null, position);
         if (pieceToRemove.isColorWhite()) {
+            assert whitePiecesOnBoard.contains(pieceToRemove);
             whitePiecesOnBoard.remove(pieceToRemove);
         } else {
+            assert blackPiecesOnBoard.contains(pieceToRemove);
             blackPiecesOnBoard.remove(pieceToRemove);
         }
         assert isValid();
@@ -125,8 +127,8 @@ public class BoardState {
 
     public void executeMove(Move move) {
 
-        List<Pair<Piece, Position>> oldPiecePositions = new ArrayList<>();
-
+        List<Pair<Piece, Pair<Position, Position>>> displacedPiecesOldPositions = new ArrayList<>();
+        List<Pair<Piece, Position>> removedPieces = new ArrayList<>();
         List<Pair<Piece, Pair<Position, Position>>> piecesToMove = move.getPiecesToMove();
         for (Pair<Piece, Pair<Position, Position>> piecePositionPair : piecesToMove) {
             Piece pieceToMove = piecePositionPair.fst;
@@ -136,57 +138,70 @@ public class BoardState {
 
             assert getPieceAt(oldPosition).equals(pieceToMove);
 
-            oldPiecePositions.add(new Pair<>(pieceToMove, oldPosition));
-            oldPiecePositions.add(new Pair<>(currentPieceAtNewPosition, newPosition));
+            displacedPiecesOldPositions.add(new Pair<>(pieceToMove, new Pair<>(oldPosition, newPosition)));
 
             if (currentPieceAtNewPosition != null) {
                 assert currentPieceAtNewPosition.isColorWhite() != pieceToMove.isColorWhite();
+                removedPieces.add(new Pair<>(currentPieceAtNewPosition, newPosition));
                 removePiece(currentPieceAtNewPosition, newPosition);
             }
             displacePiece(pieceToMove, oldPosition, newPosition);
         }
 
+        List<Pair<Piece, Position>> pieceToRemoveAtPosition = move.getPiecesToRemove();
+        if (pieceToRemoveAtPosition != null && !pieceToRemoveAtPosition.isEmpty()) {
+            assert removedPieces.isEmpty();
+            for (Pair<Piece, Position> piecePositionToRemove : pieceToRemoveAtPosition) {
+                Piece pieceToRemove = piecePositionToRemove.fst;
+                Position positionToRemovePieceFrom = piecePositionToRemove.snd;
+                removePiece(pieceToRemove, positionToRemovePieceFrom);
+                removedPieces.add(new Pair<>(pieceToRemove, positionToRemovePieceFrom));
+            }
+
+        }
+
         Pair<Piece, Position> pieceToCreateAtPosition = move.getPieceToCreate();
+        Pair<Piece, Position> createdPiece = null;
         if (pieceToCreateAtPosition != null) {
             Piece newPiece = pieceToCreateAtPosition.fst;
             Position newPosition = pieceToCreateAtPosition.snd;
-            if (newPiece.isColorWhite()) {
-                whitePiecesOnBoard.add(newPiece);
-            } else {
-                blackPiecesOnBoard.add(newPiece);
-            }
-
-            putPieceOnPosition(newPosition, newPiece);
+            addPiece(newPiece, newPosition);
+            createdPiece = new Pair<>(newPiece, newPosition);
         }
 
-        Pair<Piece, Position> pieceToRemoveAtPosition = move.getPieceToCreate();
-        if (pieceToRemoveAtPosition != null) {
-            Piece newPiece = pieceToRemoveAtPosition.fst;
-            Position newPosition = pieceToRemoveAtPosition.snd;
-            if (newPiece.isColorWhite()) {
-                assert whitePiecesOnBoard.contains(newPiece);
-                whitePiecesOnBoard.remove(newPiece);
-            } else {
-                assert blackPiecesOnBoard.contains(newPiece);
-                blackPiecesOnBoard.add(newPiece);
-            }
 
-            putPieceOnPosition(newPosition, newPiece);
-        }
-
-        ReverseMove newReverseMove = new ReverseMove(oldPiecePositions, null);
+        ReverseMove newReverseMove = new ReverseMove(displacedPiecesOldPositions, createdPiece, removedPieces);
         moveHistory.add(newReverseMove);
     }
 
     public void revertLastMove() {
         ReverseMove lastMove = moveHistory.get(moveHistory.size() - 1);
-        for (Pair<Piece, Position> piecePositionPair : lastMove.previousPiecePositionsDisplacements) {
-            putPieceOnPosition(piecePositionPair.snd, piecePositionPair.fst);
+        for (Pair<Piece, Pair<Position, Position>> pieceOldPositionNewPositionPair : lastMove.displacedPiecesWithOldPosition) {
+            Piece piece = pieceOldPositionNewPositionPair.fst;
+            Position oldPositionPiece = pieceOldPositionNewPositionPair.snd.fst;
+            Position newPositionPiece = pieceOldPositionNewPositionPair.snd.snd;
+            putPieceOnPosition(piece, oldPositionPiece);
+            putPieceOnPosition(null, newPositionPiece);
+        }
+
+        if (lastMove.createdPiece != null) {
+            Piece createdPieceToRemove = lastMove.createdPiece.fst;
+            Position positionToRemoveFrom = lastMove.createdPiece.snd;
+            removePiece(createdPieceToRemove, positionToRemoveFrom);
+        }
+
+        if (lastMove.removedPieces != null && !lastMove.removedPieces.isEmpty()) {
+
+            for (Pair<Piece, Position> removedPiece : lastMove.removedPieces) {
+                Piece removePieceToCreate = removedPiece.fst;
+                Position positionToCreateOn = removedPiece.snd;
+                addPiece(removePieceToCreate, positionToCreateOn);
+            }
         }
         moveHistory.remove(moveHistory.size() - 1);
     }
 
-    private void putPieceOnPosition(Position position, Piece piece) {
+    private void putPieceOnPosition(Piece piece, Position position) {
         pieces.get(position.getColumn()).set(position.getRow(), piece);
     }
 
@@ -220,6 +235,12 @@ public class BoardState {
 //            return false;
 //        }
         return true;
+    }
+
+    public int getIdForNewPieceAndUpdate() {
+        int idForNewPiece = availableId;
+        availableId++;
+        return idForNewPiece;
     }
 
     // exists only for print
@@ -257,12 +278,14 @@ public class BoardState {
     }
 
     private static class ReverseMove {
-        private final List<Pair<Piece, Position>> previousPiecePositionsDisplacements;
+        private final List<Pair<Piece, Pair<Position, Position>>> displacedPiecesWithOldPosition;
         private final Pair<Piece, Position> createdPiece;
+        private final List<Pair<Piece, Position>> removedPieces;
 
-        public ReverseMove(List<Pair<Piece, Position>> previousPiecePositionsDisplacements, Pair<Piece, Position> createdPiece) {
-            this.previousPiecePositionsDisplacements = previousPiecePositionsDisplacements;
+        public ReverseMove(List<Pair<Piece, Pair<Position, Position>>> displacedPiecesWithOldPosition, Pair<Piece, Position> createdPiece, List<Pair<Piece, Position>> removedPieces) {
+            this.displacedPiecesWithOldPosition = displacedPiecesWithOldPosition;
             this.createdPiece = createdPiece;
+            this.removedPieces = removedPieces;
         }
     }
 }
