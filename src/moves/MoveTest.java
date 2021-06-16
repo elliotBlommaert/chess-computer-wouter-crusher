@@ -1,5 +1,7 @@
-package general;
+package moves;
 
+import general.BoardState;
+import general.Position;
 import org.junit.Test;
 import pieces.Rook;
 

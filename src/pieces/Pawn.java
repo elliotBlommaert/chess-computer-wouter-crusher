@@ -1,6 +1,7 @@
 package pieces;
 
 import general.*;
+import moves.*;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,7 +1,7 @@
 package pieces;
 
 import general.BoardState;
-import general.Move;
+import moves.Move;
 import general.Position;
 
 import java.util.List;

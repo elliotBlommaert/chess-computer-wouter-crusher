@@ -1,6 +1,7 @@
 package general;
 
 import com.sun.tools.javac.util.Pair;
+import moves.Move;
 import pieces.*;
 import utils.Printer;
 
@@ -16,6 +17,10 @@ public class BoardState {
     private List<ReverseMove> moveHistory;
     private int whiteCanEnPassantToColumn;
     private int blackCanEnPassantToColumn;
+    private boolean whiteCanQueenSideCastle;
+    private boolean whiteCanKingSideCastle;
+    private boolean blackCanQueenSideCastle;
+    private boolean blackCanKingSideCastle;
 
 
     public BoardState() {
@@ -25,6 +30,11 @@ public class BoardState {
         moveHistory = new ArrayList<>();
         whiteCanEnPassantToColumn = -1;
         blackCanEnPassantToColumn = -1;
+        whiteCanQueenSideCastle = false;
+        whiteCanKingSideCastle = false;
+        blackCanQueenSideCastle = false;
+        blackCanKingSideCastle = false;
+
         pieces = new ArrayList<>();
         for (int i = 0; i < 8; i++) {
             ArrayList<Piece> currentRow = new ArrayList<>();
@@ -37,6 +47,10 @@ public class BoardState {
 
     public static BoardState getDefaultStartBoard() {
         BoardState boardState = new BoardState();
+        boardState.whiteCanQueenSideCastle = true;
+        boardState.whiteCanKingSideCastle = true;
+        boardState.blackCanQueenSideCastle = true;
+        boardState.blackCanKingSideCastle = true;
 
         // bottom white row;
         int bottomRow = 0;
@@ -81,6 +95,22 @@ public class BoardState {
         boardState.addPiece(new Rook(false, boardState.getIdForNewPieceAndUpdate()), new Position(7, topRow));
 
         return boardState;
+    }
+
+    public boolean isWhiteCanQueenSideCastle() {
+        return whiteCanQueenSideCastle;
+    }
+
+    public boolean isWhiteCanKingSideCastle() {
+        return whiteCanKingSideCastle;
+    }
+
+    public boolean isBlackCanQueenSideCastle() {
+        return blackCanQueenSideCastle;
+    }
+
+    public boolean isBlackCanKingSideCastle() {
+        return blackCanKingSideCastle;
     }
 
     public Piece getPieceAt(Position pos) {
@@ -176,15 +206,30 @@ public class BoardState {
 
         ReverseMove newReverseMove = new ReverseMove(displacedPiecesOldPositions, createdPiece, removedPieces);
         moveHistory.add(newReverseMove);
+
         if (whiteToMove) {
             blackCanEnPassantToColumn = move.getEnabledEnPassantColumn();
+            if (whiteCanKingSideCastle && (getPieceAt(7, 0) == null || getPieceAt(4, 0) == null)) {
+                whiteCanKingSideCastle = false;
+            }
+            if (whiteCanQueenSideCastle && (getPieceAt(0, 0) == null || getPieceAt(4, 0) == null)) {
+                whiteCanQueenSideCastle = false;
+            }
         } else {
             whiteCanEnPassantToColumn = move.getEnabledEnPassantColumn();
+            if (blackCanKingSideCastle && (getPieceAt(7, 7) == null || getPieceAt(4, 7) == null)) {
+                blackCanKingSideCastle = false;
+            }
+            if (blackCanQueenSideCastle && (getPieceAt(0, 7) == null || getPieceAt(4, 7) == null)) {
+                blackCanQueenSideCastle = false;
+            }
         }
         whiteToMove = !whiteToMove;
     }
 
     public void revertLastMove() {
+        whiteToMove = !whiteToMove;
+
         ReverseMove lastMove = moveHistory.get(moveHistory.size() - 1);
         for (Pair<Piece, Pair<Position, Position>> pieceOldPositionNewPositionPair : lastMove.displacedPiecesWithOldPosition) {
             Piece piece = pieceOldPositionNewPositionPair.fst;
@@ -206,6 +251,21 @@ public class BoardState {
                 Piece removePieceToCreate = removedPiece.fst;
                 Position positionToCreateOn = removedPiece.snd;
                 addPiece(removePieceToCreate, positionToCreateOn);
+            }
+        }
+
+        if (whiteToMove) {
+            if (lastMove.disallowedQueenSideCastle) {
+                whiteCanQueenSideCastle = true;
+            } else if (lastMove.disallowedKingSideCastle) {
+                whiteCanKingSideCastle = true;
+            }
+        }
+        if (!whiteToMove) {
+            if (lastMove.disallowedQueenSideCastle) {
+                blackCanQueenSideCastle = true;
+            } else if (lastMove.disallowedKingSideCastle) {
+                blackCanKingSideCastle = true;
             }
         }
         moveHistory.remove(moveHistory.size() - 1);
@@ -299,11 +359,15 @@ public class BoardState {
         private final List<Pair<Piece, Pair<Position, Position>>> displacedPiecesWithOldPosition;
         private final Pair<Piece, Position> createdPiece;
         private final List<Pair<Piece, Position>> removedPieces;
+        private final boolean disallowedQueenSideCastle;
+        private final boolean disallowedKingSideCastle;
 
         public ReverseMove(List<Pair<Piece, Pair<Position, Position>>> displacedPiecesWithOldPosition, Pair<Piece, Position> createdPiece, List<Pair<Piece, Position>> removedPieces) {
             this.displacedPiecesWithOldPosition = displacedPiecesWithOldPosition;
             this.createdPiece = createdPiece;
             this.removedPieces = removedPieces;
+            disallowedQueenSideCastle = false;
+            disallowedKingSideCastle = false;
         }
     }
 }

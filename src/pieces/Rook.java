@@ -1,8 +1,9 @@
 package pieces;
 
 import general.BoardState;
-import general.DefaultMove;
-import general.Move;
+import moves.CastlingMove;
+import moves.DefaultMove;
+import moves.Move;
 import general.Position;
 
 import java.util.ArrayList;

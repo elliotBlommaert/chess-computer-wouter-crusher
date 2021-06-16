@@ -1,9 +1,10 @@
 package pieces;
 
 import general.BoardState;
-import general.DefaultMove;
-import general.Move;
 import general.Position;
+import moves.CastlingMove;
+import moves.DefaultMove;
+import moves.Move;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,34 +33,34 @@ public class King extends Piece {
         // Right
         int rightColumn = startColumn + 1;
         if (rightColumn < 8) {
-            Piece pieceAt = board.getPieceAt(startRow, rightColumn);
+            Piece pieceAt = board.getPieceAt(rightColumn, startRow);
             if (pieceAt == null || pieceAt.colorWhite != this.colorWhite) {
-                moves.add(new DefaultMove(this, position, new Position(startRow, rightColumn)));
+                moves.add(new DefaultMove(this, position, new Position(rightColumn, startRow)));
             }
         }
         // Left
         int leftColumn = startColumn - 1;
         if (leftColumn >= 0) {
-            Piece pieceAt = board.getPieceAt(startRow, leftColumn);
+            Piece pieceAt = board.getPieceAt(leftColumn, startRow);
             if (pieceAt == null || pieceAt.colorWhite != this.colorWhite) {
-                moves.add(new DefaultMove(this, position, new Position(startRow, leftColumn)));
+                moves.add(new DefaultMove(this, position, new Position(leftColumn, startRow)));
             }
         }
 
         // Up
         int upRow = startRow + 1;
         if (upRow < 8) {
-            Piece pieceAt = board.getPieceAt(upRow, startColumn);
+            Piece pieceAt = board.getPieceAt(startColumn, upRow);
             if (pieceAt == null || pieceAt.colorWhite != this.colorWhite) {
-                moves.add(new DefaultMove(this, position, new Position(upRow, startColumn)));
+                moves.add(new DefaultMove(this, position, new Position(startColumn, upRow)));
             }
         }
         // Down
         int downRow = startRow - 1;
         if (downRow >= 0) {
-            Piece pieceAt = board.getPieceAt(downRow, startColumn);
+            Piece pieceAt = board.getPieceAt(startColumn, downRow);
             if (pieceAt == null || pieceAt.colorWhite != this.colorWhite) {
-                moves.add(new DefaultMove(this, position, new Position(downRow, startColumn)));
+                moves.add(new DefaultMove(this, position, new Position(startColumn, downRow)));
             }
         }
         // Up-right
@@ -96,6 +97,21 @@ public class King extends Piece {
             Piece pieceAt = board.getPieceAt(upLeftColumn, upLeftRow);
             if (pieceAt == null || pieceAt.colorWhite != this.colorWhite) {
                 moves.add(new DefaultMove(this, position, new Position(upLeftColumn, upLeftRow)));
+            }
+        }
+
+        // TODO: Check checks
+        int row = colorWhite ? 0 : 7;
+        if (board.isWhiteCanQueenSideCastle()) {
+            if (board.getPieceAt(1, row) == null && board.getPieceAt(2, row) == null && board.getPieceAt(3, row) == null) {
+                Piece rook = board.getPieceAt(0, row);
+                moves.add(new CastlingMove(this, rook, true));
+            }
+        }
+        if (board.isWhiteCanKingSideCastle()) {
+            if (board.getPieceAt(5, row) == null && board.getPieceAt(6, row) == null) {
+                Piece rook = board.getPieceAt(7, row);
+                moves.add(new CastlingMove(this, rook, false));
             }
         }
 
