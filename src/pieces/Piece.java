@@ -1,9 +1,11 @@
 package pieces;
 
 import general.BoardState;
+import general.CheckedData;
 import moves.Move;
 import general.Position;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -38,4 +40,18 @@ public abstract class Piece {
     abstract public String getDrawingCharacter();
 
     public abstract List<Move> getPossibleMoves(BoardState board, Position position);
+
+    public List<Move> getValidMoves(BoardState board, Position position) {
+        List<Move> possibleMoves = getPossibleMoves(board, position);
+        List<Move> validMoves = new ArrayList<>();
+        for (Move possibleMove : possibleMoves) {
+            boolean whiteToMove = board.whiteToMove();
+            board.executeMove(possibleMove);
+            if (board.isChecked(whiteToMove) ==  null) {
+                validMoves.add(possibleMove);
+            }
+            board.revertLastMove();
+        }
+        return validMoves;
+    }
 }

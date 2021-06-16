@@ -1,12 +1,6 @@
-import general.*;
-import moves.AdvanceTwoMove;
-import moves.DefaultMove;
-import moves.Move;
+import general.BoardState;
+import general.Position;
 import pieces.*;
-
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class Main {
 
@@ -15,12 +9,13 @@ public class Main {
 
         BoardState boardState = new BoardState();
 
-        boardState.addPiece(new King(false, 1), new Position(3,4));
-        boardState.addPiece(new King(true, 2), new Position(2,3));
+        boardState.addPiece(new Queen(false, 1), new Position(3, 4));
+        boardState.addPiece(new King(true, 2), new Position(3, 0));
+        Piece rook = new Rook(true, 3);
+        boardState.addPiece(rook, new Position(3, 3));
 
-        boardState.isChecked(false);
-        int i = 0;
-
+        System.out.println(boardState);
+        System.out.println(rook.getValidMoves(boardState, new Position(3, 3)));
     }
 
 

@@ -109,6 +109,10 @@ public class BoardState {
         return blackCanQueenSideCastle;
     }
 
+    public boolean whiteToMove() {
+        return whiteToMove;
+    }
+
     public boolean blackCanKingSideCastle() {
         return blackCanKingSideCastle;
     }
