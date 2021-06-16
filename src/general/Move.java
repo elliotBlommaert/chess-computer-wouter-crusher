@@ -11,7 +11,7 @@ abstract public class Move {
 
     abstract public Pair<Piece,Position> getPieceToCreate();
 
-    abstract public Pair<Piece,Position> getPieceToRemove();
+    abstract public List<Pair<Piece,Position>> getPiecesToRemove();
 
     public int getEnabledEnPassantColumn() {
         return -1;

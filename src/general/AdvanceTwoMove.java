@@ -30,7 +30,7 @@ public class AdvanceTwoMove extends Move{
     }
 
     @Override
-    public Pair<Piece, Position> getPieceToRemove() {
+    public List<Pair<Piece, Position>> getPiecesToRemove() {
         return null;
     }
 

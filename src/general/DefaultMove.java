@@ -29,7 +29,7 @@ public class DefaultMove extends Move {
     }
 
     @Override
-    public Pair<Piece, Position> getPieceToRemove() {
+    public List<Pair<Piece, Position>> getPiecesToRemove() {
         return null;
     }
 

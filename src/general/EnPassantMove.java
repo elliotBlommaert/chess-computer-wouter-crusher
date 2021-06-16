@@ -34,7 +34,7 @@ public class EnPassantMove extends Move{
     }
 
     @Override
-    public Pair<Piece, Position> getPieceToRemove() {
-        return new Pair<>(capturedPawn, capturedPosition);
+    public List<Pair<Piece, Position>> getPiecesToRemove() {
+        return Collections.singletonList(new Pair<>(capturedPawn, capturedPosition));
     }
 }

@@ -28,17 +28,74 @@ public class Pawn extends Piece {
         List<Move> possibleMoves = new ArrayList<>();
 
         int direction = colorWhite ? 1 : -1;
+        int finalRow = colorWhite ? 6 : 1;
         int startRow = position.getRow();
         int startColumn = position.getColumn();
 
+        if (startRow == finalRow) {
+            int idForNewPiece = board.getIdForNewPieceAndUpdate();
+
+            if (board.getPieceAt(startColumn, startRow + direction) == null) {
+                Position newPosition = new Position(startColumn, startRow + direction);
+
+                Queen newQueen = new Queen(colorWhite, idForNewPiece);
+                possibleMoves.add(new PromotionMove(newQueen, this, null, position, newPosition));
+
+                Knight newKnight = new Knight(colorWhite, idForNewPiece);
+                possibleMoves.add(new PromotionMove(newKnight, this, null, position, newPosition));
+
+                Bishop newBishop = new Bishop(colorWhite, idForNewPiece);
+                possibleMoves.add(new PromotionMove(newBishop, this, null, position, newPosition));
+
+                Rook newRook = new Rook(colorWhite, idForNewPiece);
+                possibleMoves.add(new PromotionMove(newRook, this, null, position, newPosition));
+            }
+
+
+            // Capture right
+            if (startColumn + 1 < 8 && board.getPieceAt(startColumn + 1, startRow + direction) != null) {
+                Piece pieceAt = board.getPieceAt(startColumn + 1, startRow + direction);
+                if (colorWhite != pieceAt.colorWhite) {
+                    Position newPosition = new Position(startColumn + 1, startRow + direction);
+                    Queen newQueen = new Queen(colorWhite, idForNewPiece);
+                    possibleMoves.add(new PromotionMove(newQueen, this, pieceAt, position, newPosition));
+
+                    Knight newKnight = new Knight(colorWhite, idForNewPiece);
+                    possibleMoves.add(new PromotionMove(newKnight, this, pieceAt, position, newPosition));
+
+                    Bishop newBishop = new Bishop(colorWhite, idForNewPiece);
+                    possibleMoves.add(new PromotionMove(newBishop, this, pieceAt, position, newPosition));
+
+                    Rook newRook = new Rook(colorWhite, idForNewPiece);
+                    possibleMoves.add(new PromotionMove(newRook, this, pieceAt, position, newPosition));
+                }
+            }
+            // Capture left
+            if (startColumn - 1 >= 0 && board.getPieceAt(startColumn - 1, startRow + direction) != null) {
+                Piece pieceAt = board.getPieceAt(startColumn - 1, startRow + direction);
+                if (colorWhite != pieceAt.colorWhite) {
+                    Position newPosition = new Position(startColumn - 1, startRow + direction);
+                    Queen newQueen = new Queen(colorWhite, idForNewPiece);
+                    possibleMoves.add(new PromotionMove(newQueen, this, pieceAt, position, newPosition));
+
+                    Knight newKnight = new Knight(colorWhite, idForNewPiece);
+                    possibleMoves.add(new PromotionMove(newKnight, this, pieceAt, position, newPosition));
+
+                    Bishop newBishop = new Bishop(colorWhite, idForNewPiece);
+                    possibleMoves.add(new PromotionMove(newBishop, this, pieceAt, position, newPosition));
+
+                    Rook newRook = new Rook(colorWhite, idForNewPiece);
+                    possibleMoves.add(new PromotionMove(newRook, this, pieceAt, position, newPosition));
+                }
+            }
+
+            return possibleMoves;
+        }
         // Move forward
         if (board.getPieceAt(startColumn, startRow + direction) == null) {
             Position newPosition = new Position(startColumn, startRow + direction);
-            int finalRow = colorWhite ? 6 : 1;
-            if (startRow == finalRow) {
-                // todo: make promotion moves
-            } else {
-                possibleMoves.add(new DefaultMove(this, position, newPosition));
+
+            possibleMoves.add(new DefaultMove(this, position, newPosition));
 
                 // Two forward
                 int initialRow = colorWhite ? 1 : 6;
@@ -47,7 +104,7 @@ public class Pawn extends Piece {
                     possibleMoves.add(new AdvanceTwoMove(this, position, newPosition2));
                 }
             }
-        }
+
         // Capture right
         if (startColumn + 1 < 8) {
             int canEnPassantRow = colorWhite ? 4 : 3;
@@ -82,8 +139,7 @@ public class Pawn extends Piece {
                 possibleMoves.add(new EnPassantMove(this, position, newPosition, capturedPiece, capturedPosition));
             }
         }
-        // TODO: promotion
-
         return possibleMoves;
     }
+
 }
