@@ -1,7 +1,6 @@
 package pieces;
 
 import general.BoardState;
-import moves.CastlingMove;
 import moves.DefaultMove;
 import moves.Move;
 import general.Position;

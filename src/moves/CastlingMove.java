@@ -54,4 +54,10 @@ public class CastlingMove extends Move {
     public List<Pair<Piece, Position>> getPiecesToRemove() {
         return null;
     }
+
+    @Override
+    public String toString() {
+        String castlingString = queenSide ? " O-O-O" : " O-O";
+        return king.getDrawingCharacter() + castlingString;
+    }
 }

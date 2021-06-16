@@ -39,7 +39,7 @@ public abstract class Piece {
 
     abstract public String getDrawingCharacter();
 
-    public abstract List<Move> getPossibleMoves(BoardState board, Position position);
+    protected abstract List<Move> getPossibleMoves(BoardState board, Position position);
 
     public List<Move> getValidMovesIfChecked(BoardState board, Position position, CheckedData checkedData) {
         // Dummy code

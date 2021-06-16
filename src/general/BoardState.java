@@ -30,10 +30,10 @@ public class BoardState {
         moveHistory = new ArrayList<>();
         whiteCanEnPassantToColumn = -1;
         blackCanEnPassantToColumn = -1;
-        whiteCanQueenSideCastle = false;
-        whiteCanKingSideCastle = false;
-        blackCanQueenSideCastle = false;
-        blackCanKingSideCastle = false;
+        whiteCanQueenSideCastle = true;
+        whiteCanKingSideCastle = true;
+        blackCanQueenSideCastle = true;
+        blackCanKingSideCastle = true;
 
         pieces = new ArrayList<>();
         for (int i = 0; i < 8; i++) {
@@ -47,10 +47,6 @@ public class BoardState {
 
     public static BoardState getDefaultStartBoard() {
         BoardState boardState = new BoardState();
-        boardState.whiteCanQueenSideCastle = true;
-        boardState.whiteCanKingSideCastle = true;
-        boardState.blackCanQueenSideCastle = true;
-        boardState.blackCanKingSideCastle = true;
 
         // bottom white row;
         int bottomRow = 0;
@@ -125,17 +121,26 @@ public class BoardState {
         return pieces.get(column).get(row);
     }
 
-//    public List<Move> getAllPossibleMoves() {
-//        if (isChecked(whiteToMove)) {
-//            return getPossibleMovesForCheck()
-//        } else {
-//
-//        }
-//        return null;
-//    }
+    public List<Move> getAllPossibleMoves() {
+        List<Move> possibleMoves = new ArrayList<>();
+        for (int columnNumber = 0; columnNumber < 8; columnNumber++) {
+            for (int rowNumber = 0; rowNumber < 8; rowNumber++) {
+                Piece piece = getPieceAt(columnNumber, rowNumber);
+                if (piece != null && piece.isColorWhite() == whiteToMove) {
+                    possibleMoves.addAll(piece.getValidMoves(this, new Position(columnNumber, rowNumber)));
+                }
+            }
+        }
+        return possibleMoves;
+    }
+
 
     public CheckedData isChecked(boolean isWhite) {
         Position kingPosition = findKingPosition(isWhite);
+        return isThreatened(isWhite, kingPosition);
+    }
+
+    public CheckedData isThreatened(boolean isWhite, Position position) {
         List<Position> checkPositions = new ArrayList<>();
 
         List<Pair<Integer, Integer>> horizontalAndVerticalDirections = Arrays.asList(
@@ -145,8 +150,8 @@ public class BoardState {
                 new Pair<>(1, 0)
         );
 
-        int kingColumn = kingPosition.getColumn();
-        int kingRow = kingPosition.getRow();
+        int kingColumn = position.getColumn();
+        int kingRow = position.getRow();
 
         for (Pair<Integer, Integer> direction : horizontalAndVerticalDirections) {
             int newColumn = kingColumn;
@@ -211,17 +216,13 @@ public class BoardState {
         List<Pair<Integer, Integer>> knightDirections = Arrays.asList(
                 new Pair<>(2, 1),
                 new Pair<>(1, 2),
-
                 new Pair<>(-2, 1),
                 new Pair<>(-1, 2),
-
                 new Pair<>(2, -1),
                 new Pair<>(1, -2),
-
                 new Pair<>(-2, -1),
                 new Pair<>(-1, -2)
         );
-
         for (Pair<Integer, Integer> knightDirection : knightDirections) {
             int newColumn = knightDirection.fst + kingColumn;
             int newRow = knightDirection.snd + kingRow;
@@ -231,7 +232,6 @@ public class BoardState {
                     if (!checkPositions.isEmpty()) {
                         return new CheckedData(Collections.emptyList());
                     }
-
                     checkPositions.add(new Position(newColumn, newRow));
                 }
             }
@@ -248,7 +248,6 @@ public class BoardState {
                 if (!checkPositions.isEmpty()) {
                     return new CheckedData(Collections.emptyList());
                 }
-
                 checkPositions.add(new Position(leftPawnColumn, leftPawnRow));
             }
         }
@@ -300,6 +299,7 @@ public class BoardState {
 
         return new CheckedData(checkPositions);
     }
+
 
     private Position findKingPosition(boolean isWhite) {
 

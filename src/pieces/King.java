@@ -107,14 +107,25 @@ public class King extends Piece {
 
         if (canQueenSideCastle) {
             if (board.getPieceAt(1, row) == null && board.getPieceAt(2, row) == null && board.getPieceAt(3, row) == null) {
-                Piece rook = board.getPieceAt(0, row);
-                moves.add(new CastlingMove(this, rook, true));
+                if (board.isThreatened(colorWhite, new Position(1, row)) == null
+                        && board.isThreatened(colorWhite, new Position(2, row)) == null
+                        && board.isThreatened(colorWhite, new Position(3, row)) == null
+                        && board.isThreatened(colorWhite, new Position(4, row)) == null
+                ) {
+                    Piece rook = board.getPieceAt(0, row);
+                    moves.add(new CastlingMove(this, rook, true));
+                }
             }
         }
         if (canKingSideCastle) {
             if (board.getPieceAt(5, row) == null && board.getPieceAt(6, row) == null) {
-                Piece rook = board.getPieceAt(7, row);
-                moves.add(new CastlingMove(this, rook, false));
+                if (board.isThreatened(colorWhite, new Position(4, row)) == null
+                        && board.isThreatened(colorWhite, new Position(5, row)) == null
+                        && board.isThreatened(colorWhite, new Position(6, row)) == null
+                ) {
+                    Piece rook = board.getPieceAt(7, row);
+                    moves.add(new CastlingMove(this, rook, false));
+                }
             }
         }
 
