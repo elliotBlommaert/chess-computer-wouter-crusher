@@ -1,6 +1,6 @@
 package moves;
 
-import com.sun.tools.javac.util.Pair;
+import general.Pair;
 import general.Position;
 import pieces.Piece;
 
