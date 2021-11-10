@@ -1,6 +1,5 @@
 package general;
 
-import general.Pair;
 import moves.Move;
 import pieces.*;
 import utils.Printer;
@@ -30,10 +29,10 @@ public class BoardState {
         moveHistory = new ArrayList<>();
         whiteCanEnPassantToColumn = -1;
         blackCanEnPassantToColumn = -1;
-        whiteCanQueenSideCastle = true;
-        whiteCanKingSideCastle = true;
-        blackCanQueenSideCastle = true;
-        blackCanKingSideCastle = true;
+        whiteCanQueenSideCastle = false;
+        whiteCanKingSideCastle = false;
+        blackCanQueenSideCastle = false;
+        blackCanKingSideCastle = false;
 
         pieces = new ArrayList<>();
         for (int i = 0; i < 8; i++) {
@@ -47,6 +46,11 @@ public class BoardState {
 
     public static BoardState getDefaultStartBoard() {
         BoardState boardState = new BoardState();
+
+        boardState.whiteCanQueenSideCastle = true;
+        boardState.whiteCanKingSideCastle = true;
+        boardState.blackCanQueenSideCastle = true;
+        boardState.blackCanKingSideCastle = true;
 
         // bottom white row;
         int bottomRow = 0;
@@ -166,7 +170,7 @@ public class BoardState {
 
             List<Position> currentMaybeResolvingCheckPositions = new ArrayList<>();
             int directionColumnIncrement = direction.getFst();
-            int directionRowIncrement = direction.getSnd();
+            int directionRowIncrement = direction.getSecond();
 
             newColumn += directionColumnIncrement;
             newRow += directionRowIncrement;
@@ -199,7 +203,7 @@ public class BoardState {
             int newRow = kingRow;
             List<Position> currentMaybeResolvingCheckPositions = new ArrayList<>();
             int directionColumnIncrement = direction.getFst();
-            int directionRowIncrement = direction.getSnd();
+            int directionRowIncrement = direction.getSecond();
 
             newColumn += directionColumnIncrement;
             newRow += directionRowIncrement;
@@ -232,7 +236,7 @@ public class BoardState {
         );
         for (Pair<Integer, Integer> knightDirection : knightDirections) {
             int newColumn = knightDirection.getFst() + kingColumn;
-            int newRow = knightDirection.getSnd() + kingRow;
+            int newRow = knightDirection.getSecond() + kingRow;
             if (newColumn < 8 && newColumn >= 0 && newRow < 8 && newRow >= 0) {
                 Piece pieceAt = getPieceAt(newColumn, newRow);
                 if (pieceAt != null && pieceAt.isColorWhite() != isWhite && pieceAt instanceof Knight) {
@@ -286,7 +290,7 @@ public class BoardState {
         );
         for (Pair<Integer, Integer> kingCheckIncrement : kingCheckIncrements) {
             int newColumn = kingColumn + kingCheckIncrement.getFst();
-            int newRow = kingRow + kingCheckIncrement.getSnd();
+            int newRow = kingRow + kingCheckIncrement.getSecond();
 
             if (newColumn < 8 && newColumn >= 0 && newRow < 8 && newRow >= 0) {
                 Piece pieceAt = getPieceAt(newColumn, newRow);
@@ -371,8 +375,8 @@ public class BoardState {
         List<Pair<Piece, Pair<Position, Position>>> piecesToMove = move.getPiecesToMove();
         for (Pair<Piece, Pair<Position, Position>> piecePositionPair : piecesToMove) {
             Piece pieceToMove = piecePositionPair.getFst();
-            Position oldPosition = piecePositionPair.getSnd().getFst();
-            Position newPosition = piecePositionPair.getSnd().getSnd();
+            Position oldPosition = piecePositionPair.getSecond().getFst();
+            Position newPosition = piecePositionPair.getSecond().getSecond();
             Piece currentPieceAtNewPosition = getPieceAt(newPosition);
 
             assert getPieceAt(oldPosition).equals(pieceToMove);
@@ -392,7 +396,7 @@ public class BoardState {
             assert removedPieces.isEmpty();
             for (Pair<Piece, Position> piecePositionToRemove : piecesToRemoveAtPosition) {
                 Piece pieceToRemove = piecePositionToRemove.getFst();
-                Position positionToRemovePieceFrom = piecePositionToRemove.getSnd();
+                Position positionToRemovePieceFrom = piecePositionToRemove.getSecond();
                 removePiece(pieceToRemove, positionToRemovePieceFrom);
                 removedPieces.add(new Pair<>(pieceToRemove, positionToRemovePieceFrom));
             }
@@ -403,7 +407,7 @@ public class BoardState {
         Pair<Piece, Position> createdPiece = null;
         if (pieceToCreateAtPosition != null) {
             Piece newPiece = pieceToCreateAtPosition.getFst();
-            Position newPosition = pieceToCreateAtPosition.getSnd();
+            Position newPosition = pieceToCreateAtPosition.getSecond();
             addPiece(newPiece, newPosition);
             createdPiece = new Pair<>(newPiece, newPosition);
         }
@@ -438,15 +442,15 @@ public class BoardState {
         ReverseMove lastMove = moveHistory.get(moveHistory.size() - 1);
         for (Pair<Piece, Pair<Position, Position>> pieceOldPositionNewPositionPair : lastMove.displacedPiecesWithOldPosition) {
             Piece piece = pieceOldPositionNewPositionPair.getFst();
-            Position oldPositionPiece = pieceOldPositionNewPositionPair.getSnd().getFst();
-            Position newPositionPiece = pieceOldPositionNewPositionPair.getSnd().getSnd();
+            Position oldPositionPiece = pieceOldPositionNewPositionPair.getSecond().getFst();
+            Position newPositionPiece = pieceOldPositionNewPositionPair.getSecond().getSecond();
             putPieceOnPosition(piece, oldPositionPiece);
             putPieceOnPosition(null, newPositionPiece);
         }
 
         if (lastMove.createdPiece != null) {
             Piece createdPieceToRemove = lastMove.createdPiece.getFst();
-            Position positionToRemoveFrom = lastMove.createdPiece.getSnd();
+            Position positionToRemoveFrom = lastMove.createdPiece.getSecond();
             removePiece(createdPieceToRemove, positionToRemoveFrom);
         }
 
@@ -454,7 +458,7 @@ public class BoardState {
 
             for (Pair<Piece, Position> removedPiece : lastMove.removedPieces) {
                 Piece removePieceToCreate = removedPiece.getFst();
-                Position positionToCreateOn = removedPiece.getSnd();
+                Position positionToCreateOn = removedPiece.getSecond();
                 addPiece(removePieceToCreate, positionToCreateOn);
             }
         }
