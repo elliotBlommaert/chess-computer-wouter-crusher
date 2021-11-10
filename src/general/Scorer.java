@@ -5,7 +5,7 @@ import pieces.Piece;
 public class Scorer {
     static public double scoreBoard(BoardState board) {
         if (board.getAllPossibleMoves().isEmpty()) {
-            return board.whiteToMove() ? 1000 : -1000;
+            return board.whiteToMove() ? -1000 : 1000;
         }
 
         double sum = 0;
