@@ -10,6 +10,11 @@ import java.util.List;
 
 public class Bishop extends Piece {
 
+    @Override
+    public double getValue() {
+        return 3;
+    }
+
     public Bishop(boolean colorWhite, int id) {
         super(colorWhite, id);
     }

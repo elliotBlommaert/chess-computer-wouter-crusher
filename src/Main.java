@@ -1,5 +1,6 @@
 import general.BoardState;
 import general.Position;
+import general.Scorer;
 import moves.AdvanceTwoMove;
 import moves.DefaultMove;
 import moves.Move;
@@ -14,13 +15,14 @@ public class Main {
     public static void main(String[] args) {
         BoardState board = BoardState.getDefaultStartBoard();
         System.out.println(board);
+        System.out.println(Scorer.scoreBoard(board));
         for (int i = 0; i < 2000; i++) {
-            System.out.println("------------------------------------");
-            List<Move> allPossibleMoves = board.getAllPossibleMoves();
-            Move move = allPossibleMoves.get(new Random(2l).nextInt(allPossibleMoves.size()));
-            System.out.println(move);
-            board.executeMove(move);
-            System.out.println(board);
+//            System.out.println("------------------------------------");
+//            List<Move> allPossibleMoves = board.getAllPossibleMoves();
+//            Move move = allPossibleMoves.get(new Random(2l).nextInt(allPossibleMoves.size()));
+//            System.out.println(move);
+//            board.executeMove(move);
+//            System.out.println(board);
         }
     }
 

@@ -9,6 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Knight extends Piece {
+    @Override
+    public double getValue() {
+        return 3;
+    }
+
     public Knight(boolean colorWhite, int id) {
         super(colorWhite, id);
     }

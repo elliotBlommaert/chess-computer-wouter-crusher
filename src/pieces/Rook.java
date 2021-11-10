@@ -10,6 +10,11 @@ import java.util.List;
 
 public class Rook extends Piece {
 
+    @Override
+    public double getValue() {
+        return 5;
+    }
+
     public Rook(boolean colorWhite, int id) {
         super(colorWhite, id);
     }

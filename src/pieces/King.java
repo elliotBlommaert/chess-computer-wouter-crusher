@@ -11,6 +11,11 @@ import java.util.List;
 
 public class King extends Piece {
 
+    @Override
+    public double getValue() {
+        return 500;
+    }
+
     public King(boolean colorWhite, int id) {
         super(colorWhite, id);
     }

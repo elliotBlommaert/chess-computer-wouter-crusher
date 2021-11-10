@@ -14,6 +14,8 @@ public abstract class Piece {
     protected boolean colorWhite;
     protected int id;
 
+    public abstract double getValue();
+
     public Piece(boolean colorWhite, int id) {
         this.colorWhite = colorWhite;
         this.id = id;

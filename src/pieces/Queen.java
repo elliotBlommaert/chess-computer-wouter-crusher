@@ -10,6 +10,11 @@ import java.util.List;
 
 public class Queen extends Piece {
 
+    @Override
+    public double getValue() {
+        return 9;
+    }
+
     public Queen(boolean colorWhite, int id) {
         super(colorWhite, id);
     }

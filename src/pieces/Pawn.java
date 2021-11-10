@@ -8,6 +8,11 @@ import java.util.List;
 
 public class Pawn extends Piece {
 
+    @Override
+    public double getValue() {
+        return 1;
+    }
+
     public Pawn(boolean colorWhite, int id) {
         super(colorWhite, id);
     }

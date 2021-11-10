@@ -134,6 +134,13 @@ public class BoardState {
         return possibleMoves;
     }
 
+    public Set<Piece> getWhitePiecesOnBoard() {
+        return whitePiecesOnBoard;
+    }
+
+    public Set<Piece> getBlackPiecesOnBoard() {
+        return blackPiecesOnBoard;
+    }
 
     public CheckedData isChecked(boolean isWhite) {
         Position kingPosition = findKingPosition(isWhite);
