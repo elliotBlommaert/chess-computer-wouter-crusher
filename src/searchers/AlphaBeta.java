@@ -6,6 +6,8 @@ import general.Pair;
 import general.Scorer;
 import moves.Move;
 
+import java.util.List;
+
 public class AlphaBeta {
 
     static public Pair<Double, Move> findOptimalMove(Board board, int depth) {
@@ -23,7 +25,9 @@ public class AlphaBeta {
         if (board.whiteToMove()) {
             optimalScore = Double.NEGATIVE_INFINITY;
 
-            for (Move possibleMove : board.getAllPossibleMoves()) {
+            List<Move> allPossibleMoves = board.getAllPossibleMoves();
+            for (int i = 0; i < allPossibleMoves.size(); i++) {
+                Move possibleMove = allPossibleMoves.get(i);
                 board.executeMove(possibleMove);
                 BoardStatus boardStatus = board.getStatus();
 
@@ -49,12 +53,16 @@ public class AlphaBeta {
                 if (score >= optimalScore) {
                     optimalScore = score;
                     optimalMove = possibleMove;
+                } else if (i == 0) {
+                    int j = 8;
                 }
             }
         } else {
             optimalScore = Double.POSITIVE_INFINITY;
 
-            for (Move possibleMove : board.getAllPossibleMoves()) {
+            List<Move> allPossibleMoves = board.getAllPossibleMoves();
+            for (int i = 0; i < allPossibleMoves.size(); i++) {
+                Move possibleMove = allPossibleMoves.get(i);
                 board.executeMove(possibleMove);
                 BoardStatus boardStatus = board.getStatus();
 
@@ -80,11 +88,13 @@ public class AlphaBeta {
                 if (score <= optimalScore) {
                     optimalScore = score;
                     optimalMove = possibleMove;
+                }  else if (i == 0) {
+                    int j = 8;
                 }
             }
         }
 
-        assert optimalMove != null;
+//        assert optimalMove != null;
         return new Pair<>(optimalScore, optimalMove);
     }
 
