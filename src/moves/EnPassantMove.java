@@ -38,4 +38,9 @@ public class EnPassantMove extends Move{
     public List<Pair<Piece, Position>> getPiecesToRemove() {
         return Collections.singletonList(new Pair<>(capturedPawn, capturedPosition));
     }
+
+    @Override
+    public String toString() {
+        return pawnToMove.getDrawingCharacter() + " " + oldPosition.toString() + "-> X " + newPosition.toString();
+    }
 }

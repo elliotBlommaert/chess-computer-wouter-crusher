@@ -25,6 +25,11 @@ public class PromotionMove extends Move {
     }
 
     @Override
+    public String toString() {
+        return pawn.getDrawingCharacter() + " " + oldPawnPosition.toString() + " -> " + newPiece.getDrawingCharacter() + " " + newPiecePosition.toString();
+    }
+
+    @Override
     public List<Pair<Piece, Pair<Position, Position>>> getPiecesToMove() {
         return Collections.emptyList();
     }

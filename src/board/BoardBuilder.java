@@ -71,7 +71,7 @@ public class BoardBuilder {
         }
 
         int row = Integer.parseInt(String.valueOf(positionStr.charAt(1)));
-        assert 0 <= row && row < 8;
+        assert 0 < row && row <= 8;
 
         return new Position(column, row - 1);
     }

@@ -14,6 +14,8 @@ abstract public class Move {
 
     abstract public List<Pair<Piece,Position>> getPiecesToRemove();
 
+    abstract public String toString();
+
     public int getEnabledEnPassantColumn() {
         return -1;
     }
