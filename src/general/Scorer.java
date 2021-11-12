@@ -1,18 +1,12 @@
 package general;
 
-import board.BoardState;
+import board.Board;
+import board.BoardStatus;
 import pieces.Piece;
 
 public class Scorer {
-    static public double scoreBoard(BoardState board) {
-        if (board.getAllPossibleMoves().isEmpty()) {
-            if (board.isChecked(board.whiteToMove()) != null) {
-                return board.whiteToMove() ? -1000 : 1000;
-            } else {
-                // Stalemate
-                return 0;
-            }
-        }
+    static public double scoreBoard(Board board) {
+        assert board.getStatus() == BoardStatus.CONTINUE;
 
         double sum = 0;
         for (Piece whitePiece : board.getWhitePiecesOnBoard()) {

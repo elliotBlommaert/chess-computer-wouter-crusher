@@ -1,89 +1,50 @@
 package tree;
 
-import board.BoardState;
+import board.Board;
+import board.BoardStatus;
+import general.Pair;
 import general.Scorer;
 import moves.Move;
 
 public class Tree {
 
-    static public Move findOptimalMove(BoardState boardState, int depth) {
-        assert depth > 0;
-
-        double optimalScore = boardState.whiteToMove() ? Double.NEGATIVE_INFINITY : Double.POSITIVE_INFINITY;
-        Move optimalMove = null;
-
-        for (Move possibleMove : boardState.getAllPossibleMoves()) {
-            boardState.executeMove(possibleMove);
-            double score = findOptimalScore(boardState, depth - 1);
-            boardState.revertLastMove();
-
-            if (boardState.whiteToMove()) {
-                if (score > optimalScore) {
-                    optimalScore = score;
-                    optimalMove = possibleMove;
-                }
-            } else {
-                if (score < optimalScore) {
-                    optimalScore = score;
-                    optimalMove = possibleMove;
-                }
-            }
-        }
-        return optimalMove;
-    }
-
-    static double findOptimalScore(BoardState boardState, int depth) {
+    static public Pair<Double, Move> findOptimalMove(Board board, int depth) {
 
         if (depth == 0) {
-            return Scorer.scoreBoard(boardState);
+            return new Pair<>(Scorer.scoreBoard(board), null);
         }
 
-        double optimalScore = boardState.whiteToMove() ? Double.NEGATIVE_INFINITY : Double.POSITIVE_INFINITY;
+        double optimalScore = board.whiteToMove() ? Double.NEGATIVE_INFINITY : Double.POSITIVE_INFINITY;
+        Move optimalMove = null;
 
-        for (Move possibleMove : boardState.getAllPossibleMoves()) {
-            boardState.executeMove(possibleMove);
-            double score = findOptimalScore(boardState, depth - 1);
-            boardState.revertLastMove();
+        for (Move possibleMove : board.getAllPossibleMoves()) {
+            board.executeMove(possibleMove);
+            BoardStatus boardStatus = board.getStatus();
 
-            if (boardState.whiteToMove()) {
+            double score;
+            if (boardStatus == BoardStatus.MATE) {
+                board.revertLastMove();
+                return new Pair<>(board.whiteToMove() ? Double.POSITIVE_INFINITY : Double.NEGATIVE_INFINITY, possibleMove);
+            } else if (boardStatus == BoardStatus.STALEMATE) {
+                score = 0;
+            } else {
+                score = findOptimalMove(board, depth - 1).getFirst();
+            }
+            board.revertLastMove();
+
+            if (board.whiteToMove()) {
                 if (score > optimalScore) {
                     optimalScore = score;
+                    optimalMove = possibleMove;
                 }
             } else {
                 if (score < optimalScore) {
                     optimalScore = score;
+                    optimalMove = possibleMove;
                 }
             }
         }
-        return optimalScore;
+        return new Pair<>(optimalScore, optimalMove);
     }
 
-    static Move findOptimalMoveDepth2(BoardState boardState) {
-        assert boardState.whiteToMove();
-
-        double optimalWhiteScore = Double.NEGATIVE_INFINITY;
-        Move currentOptimalMove = null;
-
-        for (Move possibleWhiteMove : boardState.getAllPossibleMoves()) {
-            boardState.executeMove(possibleWhiteMove);
-
-            double optimalBlackScore = Double.POSITIVE_INFINITY;
-            for (Move possibleBlackMove : boardState.getAllPossibleMoves()) {
-                boardState.executeMove(possibleBlackMove);
-                double currentScore = Scorer.scoreBoard(boardState);
-                if (currentScore < optimalBlackScore) {
-                    optimalBlackScore = currentScore;
-                }
-                boardState.revertLastMove();
-            }
-
-            if (optimalBlackScore > optimalWhiteScore) {
-                optimalWhiteScore = optimalBlackScore;
-                currentOptimalMove = possibleWhiteMove;
-            }
-            boardState.revertLastMove();
-        }
-
-        return currentOptimalMove;
-    }
 }

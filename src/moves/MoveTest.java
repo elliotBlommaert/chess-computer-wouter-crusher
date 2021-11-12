@@ -1,6 +1,6 @@
 package moves;
 
-import board.BoardState;
+import board.Board;
 import general.Position;
 import org.junit.Test;
 import pieces.Rook;
@@ -13,7 +13,7 @@ public class MoveTest {
 
     @Test
     public void testMoveToEmptySquare() {
-        BoardState boardState = new BoardState();
+        Board boardState = new Board();
         Position oldPosition = new Position(0, 0);
         Rook rock = new Rook(true, 0);
         boardState.addPiece(rock, oldPosition);
@@ -29,7 +29,7 @@ public class MoveTest {
 
     @Test
     public void testCapture() {
-        BoardState boardState = new BoardState();
+        Board boardState = new Board();
         Position positionWhiteRock = new Position(0, 0);
         Rook whiteRock = new Rook(true, 0);
         Position positionBlackRock = new Position(0, 1);
@@ -47,7 +47,7 @@ public class MoveTest {
 
     @Test
     public void testIllegalMove() {
-        BoardState boardState = new BoardState();
+        Board boardState = new Board();
         Position oldPositionWhiteRock = new Position(0, 0);
         Rook whiteRock = new Rook(true, 0);
         Position oldPositionBlackRock = new Position(0, 1);

@@ -1,6 +1,6 @@
 package pieces;
 
-import board.BoardState;
+import board.Board;
 import general.CheckedData;
 import moves.Move;
 import general.Position;
@@ -41,14 +41,14 @@ public abstract class Piece {
 
     abstract public String getDrawingCharacter();
 
-    protected abstract List<Move> getPossibleMoves(BoardState board, Position position);
+    protected abstract List<Move> getPossibleMoves(Board board, Position position);
 
-    public List<Move> getValidMovesIfChecked(BoardState board, Position position, CheckedData checkedData) {
+    public List<Move> getValidMovesIfChecked(Board board, Position position, CheckedData checkedData) {
         // Dummy code
         return getPossibleMoves(board, position);
     }
 
-    public List<Move> getValidMoves(BoardState board, Position position) {
+    public List<Move> getValidMoves(Board board, Position position) {
         boolean whiteToMove = board.whiteToMove();
         List<Move> possibleMoves = new ArrayList<>();
         CheckedData checked = board.isChecked(whiteToMove);

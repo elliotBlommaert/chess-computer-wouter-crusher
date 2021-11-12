@@ -1,7 +1,7 @@
 package test;
 
 import board.BoardBuilder;
-import board.BoardState;
+import board.Board;
 import general.Position;
 import moves.DefaultMove;
 import moves.Move;
@@ -13,11 +13,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class TestOptimalMove {
     @Test
     public void testMateInOne() {
-        BoardState board = new BoardBuilder()
+        Board board = new BoardBuilder()
                 .addPieces("K,b,B1 - Q,b,G4 - KN,b,F5 - K,w,H8")
                 .blackToMove()
                 .build();
-        Move optimalMove = Tree.findOptimalMove(board, 3);
+        Move optimalMove = Tree.findOptimalMove(board, 3).getSecond();
         assertThat(optimalMove.toString())
                 .isEqualTo(
                         new DefaultMove(

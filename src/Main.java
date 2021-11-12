@@ -1,16 +1,11 @@
 import board.BoardBuilder;
-import board.BoardState;
-import general.Position;
-import general.Scorer;
-import moves.Move;
-import pieces.*;
-import tree.Tree;
+import board.Board;
 
 public class Main {
 
 
     public static void main(String[] args) {
-        BoardState board = new BoardBuilder()
+        Board board = new BoardBuilder()
                 .addPieces("K,w,A1 - Q,b,B2 - B,b,C3 - K,b,D4")
                 .blackToMove()
                 .build();

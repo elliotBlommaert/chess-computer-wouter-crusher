@@ -9,7 +9,7 @@ import utils.Printer;
 
 import java.util.*;
 
-public class BoardState {
+public class Board {
 
     private boolean whiteToMove;
     private int availableId;
@@ -25,7 +25,7 @@ public class BoardState {
     private boolean blackCanKingSideCastle;
 
 
-    public BoardState() {
+    public Board() {
         whiteToMove = true;
         whitePiecesOnBoard = new HashSet<>();
         blackPiecesOnBoard = new HashSet<>();
@@ -47,8 +47,8 @@ public class BoardState {
         }
     }
 
-    public static BoardState getDefaultStartBoard() {
-        BoardState boardState = new BoardState();
+    public static Board getDefaultStartBoard() {
+        Board boardState = new Board();
 
         boardState.whiteCanQueenSideCastle = true;
         boardState.whiteCanKingSideCastle = true;
@@ -141,6 +141,17 @@ public class BoardState {
         return possibleMoves;
     }
 
+    public BoardStatus getStatus() {
+        if (getAllPossibleMoves().isEmpty()) {
+            if (isChecked(whiteToMove) != null) {
+                return BoardStatus.MATE;
+            } else {
+                return BoardStatus.STALEMATE;
+            }
+        }
+        return BoardStatus.CONTINUE;
+    }
+
     public Set<Piece> getWhitePiecesOnBoard() {
         return whitePiecesOnBoard;
     }
@@ -172,7 +183,7 @@ public class BoardState {
             int newRow = kingRow;
 
             List<Position> currentMaybeResolvingCheckPositions = new ArrayList<>();
-            int directionColumnIncrement = direction.getFst();
+            int directionColumnIncrement = direction.getFirst();
             int directionRowIncrement = direction.getSecond();
 
             newColumn += directionColumnIncrement;
@@ -205,7 +216,7 @@ public class BoardState {
             int newColumn = kingColumn;
             int newRow = kingRow;
             List<Position> currentMaybeResolvingCheckPositions = new ArrayList<>();
-            int directionColumnIncrement = direction.getFst();
+            int directionColumnIncrement = direction.getFirst();
             int directionRowIncrement = direction.getSecond();
 
             newColumn += directionColumnIncrement;
@@ -238,7 +249,7 @@ public class BoardState {
                 new Pair<>(-1, -2)
         );
         for (Pair<Integer, Integer> knightDirection : knightDirections) {
-            int newColumn = knightDirection.getFst() + kingColumn;
+            int newColumn = knightDirection.getFirst() + kingColumn;
             int newRow = knightDirection.getSecond() + kingRow;
             if (newColumn < 8 && newColumn >= 0 && newRow < 8 && newRow >= 0) {
                 Piece pieceAt = getPieceAt(newColumn, newRow);
@@ -292,7 +303,7 @@ public class BoardState {
                 new Pair<>(-1, -1)
         );
         for (Pair<Integer, Integer> kingCheckIncrement : kingCheckIncrements) {
-            int newColumn = kingColumn + kingCheckIncrement.getFst();
+            int newColumn = kingColumn + kingCheckIncrement.getFirst();
             int newRow = kingRow + kingCheckIncrement.getSecond();
 
             if (newColumn < 8 && newColumn >= 0 && newRow < 8 && newRow >= 0) {
@@ -377,8 +388,8 @@ public class BoardState {
         List<Pair<Piece, Position>> removedPieces = new ArrayList<>();
         List<Pair<Piece, Pair<Position, Position>>> piecesToMove = move.getPiecesToMove();
         for (Pair<Piece, Pair<Position, Position>> piecePositionPair : piecesToMove) {
-            Piece pieceToMove = piecePositionPair.getFst();
-            Position oldPosition = piecePositionPair.getSecond().getFst();
+            Piece pieceToMove = piecePositionPair.getFirst();
+            Position oldPosition = piecePositionPair.getSecond().getFirst();
             Position newPosition = piecePositionPair.getSecond().getSecond();
             Piece currentPieceAtNewPosition = getPieceAt(newPosition);
 
@@ -398,7 +409,7 @@ public class BoardState {
         if (piecesToRemoveAtPosition != null && !piecesToRemoveAtPosition.isEmpty()) {
             assert removedPieces.isEmpty();
             for (Pair<Piece, Position> piecePositionToRemove : piecesToRemoveAtPosition) {
-                Piece pieceToRemove = piecePositionToRemove.getFst();
+                Piece pieceToRemove = piecePositionToRemove.getFirst();
                 Position positionToRemovePieceFrom = piecePositionToRemove.getSecond();
                 removePiece(pieceToRemove, positionToRemovePieceFrom);
                 removedPieces.add(new Pair<>(pieceToRemove, positionToRemovePieceFrom));
@@ -409,7 +420,7 @@ public class BoardState {
         Pair<Piece, Position> pieceToCreateAtPosition = move.getPieceToCreate();
         Pair<Piece, Position> createdPiece = null;
         if (pieceToCreateAtPosition != null) {
-            Piece newPiece = pieceToCreateAtPosition.getFst();
+            Piece newPiece = pieceToCreateAtPosition.getFirst();
             Position newPosition = pieceToCreateAtPosition.getSecond();
             addPiece(newPiece, newPosition);
             createdPiece = new Pair<>(newPiece, newPosition);
@@ -444,15 +455,15 @@ public class BoardState {
 
         ReverseMove lastMove = moveHistory.get(moveHistory.size() - 1);
         for (Pair<Piece, Pair<Position, Position>> pieceOldPositionNewPositionPair : lastMove.displacedPiecesWithOldPosition) {
-            Piece piece = pieceOldPositionNewPositionPair.getFst();
-            Position oldPositionPiece = pieceOldPositionNewPositionPair.getSecond().getFst();
+            Piece piece = pieceOldPositionNewPositionPair.getFirst();
+            Position oldPositionPiece = pieceOldPositionNewPositionPair.getSecond().getFirst();
             Position newPositionPiece = pieceOldPositionNewPositionPair.getSecond().getSecond();
             putPieceOnPosition(piece, oldPositionPiece);
             putPieceOnPosition(null, newPositionPiece);
         }
 
         if (lastMove.createdPiece != null) {
-            Piece createdPieceToRemove = lastMove.createdPiece.getFst();
+            Piece createdPieceToRemove = lastMove.createdPiece.getFirst();
             Position positionToRemoveFrom = lastMove.createdPiece.getSecond();
             removePiece(createdPieceToRemove, positionToRemoveFrom);
         }
@@ -460,7 +471,7 @@ public class BoardState {
         if (lastMove.removedPieces != null && !lastMove.removedPieces.isEmpty()) {
 
             for (Pair<Piece, Position> removedPiece : lastMove.removedPieces) {
-                Piece removePieceToCreate = removedPiece.getFst();
+                Piece removePieceToCreate = removedPiece.getFirst();
                 Position positionToCreateOn = removedPiece.getSecond();
                 addPiece(removePieceToCreate, positionToCreateOn);
             }
@@ -552,7 +563,7 @@ public class BoardState {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        BoardState that = (BoardState) o;
+        Board that = (Board) o;
         return whiteToMove == that.whiteToMove && availableId == that.availableId && whiteCanEnPassantToColumn == that.whiteCanEnPassantToColumn && blackCanEnPassantToColumn == that.blackCanEnPassantToColumn && whiteCanQueenSideCastle == that.whiteCanQueenSideCastle && whiteCanKingSideCastle == that.whiteCanKingSideCastle && blackCanQueenSideCastle == that.blackCanQueenSideCastle && blackCanKingSideCastle == that.blackCanKingSideCastle && Objects.equals(pieces, that.pieces) && Objects.equals(whitePiecesOnBoard, that.whitePiecesOnBoard) && Objects.equals(blackPiecesOnBoard, that.blackPiecesOnBoard) && Objects.equals(moveHistory, that.moveHistory);
     }
 

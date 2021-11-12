@@ -4,13 +4,13 @@ import general.Position;
 import pieces.*;
 
 public class BoardBuilder {
-    private final BoardState board;
+    private final Board board;
     private static final String pieceFieldDelimiter = ",";
     private static final String differentPieceDelimiter = " - ";
     private int pieceId = 0;
 
     public BoardBuilder() {
-        board = new BoardState();
+        board = new Board();
     }
 
     public BoardBuilder blackToMove() {
@@ -97,7 +97,7 @@ public class BoardBuilder {
         return this;
     }
 
-    public BoardState build() {
+    public Board build() {
         return board;
     }
 }

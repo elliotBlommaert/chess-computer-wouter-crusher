@@ -1,6 +1,6 @@
 package pieces;
 
-import board.BoardState;
+import board.Board;
 import general.Position;
 import moves.CastlingMove;
 import moves.DefaultMove;
@@ -29,7 +29,7 @@ public class King extends Piece {
     }
 
     @Override
-    public List<Move> getPossibleMoves(BoardState board, Position position) {
+    public List<Move> getPossibleMoves(Board board, Position position) {
         assert board.getPieceAt(position).equals(this);
 
         List<Move> moves = new ArrayList<>();

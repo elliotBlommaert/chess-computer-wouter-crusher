@@ -24,7 +24,7 @@ public class Pair<T, S> {
         return Objects.hash(fst, snd);
     }
 
-    public T getFst() {
+    public T getFirst() {
         return fst;
     }
 
