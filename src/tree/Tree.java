@@ -33,17 +33,19 @@ public class Tree {
             board.revertLastMove();
 
             if (board.whiteToMove()) {
-                if (score > optimalScore) {
+                if (score >= optimalScore) {
                     optimalScore = score;
                     optimalMove = possibleMove;
                 }
             } else {
-                if (score < optimalScore) {
+                if (score <= optimalScore) {
                     optimalScore = score;
                     optimalMove = possibleMove;
                 }
             }
         }
+
+        assert optimalMove != null;
         return new Pair<>(optimalScore, optimalMove);
     }
 
