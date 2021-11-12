@@ -1,6 +1,6 @@
 package pieces;
 
-import general.BoardState;
+import board.BoardState;
 import general.CheckedData;
 import moves.Move;
 import general.Position;

@@ -1,7 +1,6 @@
 package tree;
 
-import general.BoardState;
-import general.Pair;
+import board.BoardState;
 import general.Scorer;
 import moves.Move;
 

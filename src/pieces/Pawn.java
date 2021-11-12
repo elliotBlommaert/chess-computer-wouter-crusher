@@ -1,5 +1,6 @@
 package pieces;
 
+import board.BoardState;
 import general.*;
 import moves.*;
 

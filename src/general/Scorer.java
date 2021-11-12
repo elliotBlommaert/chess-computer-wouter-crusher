@@ -1,5 +1,6 @@
 package general;
 
+import board.BoardState;
 import pieces.Piece;
 
 public class Scorer {
@@ -15,6 +16,21 @@ public class Scorer {
         for (Piece blackPiece : board.getBlackPiecesOnBoard()) {
             sum -= blackPiece.getValue();
         }
+
+        // Middle squares
+        for (int i = 3; i < 5; i++) {
+            for (int j = 3; j < 5; j++) {
+                Piece pieceAt = board.getPieceAt(i, j);
+                if (pieceAt != null) {
+                    if (pieceAt.isColorWhite()) {
+                        sum += 1.5;
+                    } else {
+                        sum -= 1.5;
+                    }
+                }
+            }
+        }
+
         return sum;
     }
 }

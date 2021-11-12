@@ -1,40 +1,30 @@
-import general.BoardState;
+import board.BoardBuilder;
+import board.BoardState;
 import general.Position;
 import general.Scorer;
-import moves.AdvanceTwoMove;
-import moves.DefaultMove;
 import moves.Move;
 import pieces.*;
 import tree.Tree;
-
-import java.util.List;
-import java.util.Random;
 
 public class Main {
 
 
     public static void main(String[] args) {
-        BoardState board = BoardState.getDefaultStartBoard();
+        BoardState board = new BoardBuilder()
+                .addPieces("K,w,A1 - Q,b,B2 - B,b,C3 - K,b,D4")
+                .blackToMove()
+                .build();
         System.out.println(board);
-        System.out.println(Scorer.scoreBoard(board));
+        System.out.println(board.getAllPossibleMoves());
 
-        BoardState empty = new BoardState();
-        empty.addPiece(new King(false, 0), new Position(0, 0));
-        empty.addPiece(new King(true, 0), new Position(5, 5));
-        empty.addPiece(new Queen(true, 1), new Position(1, 1));
-        Bishop bishop = new Bishop(true, 2);
-        empty.addPiece(bishop, new Position(2, 2));
-        System.out.println(Tree.findOptimalMove(empty, 2));
-        System.out.println(Scorer.scoreBoard(empty));
 
-        for (int i = 0; i < 2000; i++) {
+//        for (int i = 0; i < 100; i++) {
 //            System.out.println("------------------------------------");
-//            List<Move> allPossibleMoves = board.getAllPossibleMoves();
-//            Move move = allPossibleMoves.get(new Random(2l).nextInt(allPossibleMoves.size()));
-//            System.out.println(move);
-//            board.executeMove(move);
+//            Move optimalMove = Tree.findOptimalMove(board, 3);
+//            System.out.println(optimalMove);
+//            board.executeMove(optimalMove);
 //            System.out.println(board);
-        }
+//        }
     }
 
 

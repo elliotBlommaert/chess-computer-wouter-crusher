@@ -39,4 +39,9 @@ public class AdvanceTwoMove extends Move{
     public int getEnabledEnPassantColumn() {
         return oldPosition.getColumn();
     }
+
+    @Override
+    public String toString() {
+        return pieceToMove.getDrawingCharacter() + " " + oldPosition.toString() + "->" + newPosition.toString();
+    }
 }

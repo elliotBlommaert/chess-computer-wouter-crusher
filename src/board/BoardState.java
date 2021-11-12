@@ -1,5 +1,8 @@
-package general;
+package board;
 
+import general.CheckedData;
+import general.Pair;
+import general.Position;
 import moves.Move;
 import pieces.*;
 import utils.Printer;
@@ -564,6 +567,10 @@ public class BoardState {
         } else {
             return blackCanEnPassantToColumn == column;
         }
+    }
+
+    void setWhiteToMove(boolean whiteToMove) {
+        this.whiteToMove = whiteToMove;
     }
 
 
