@@ -18,22 +18,22 @@ public class Position {
         }
 
         char columnLetter = positionString.charAt(0);
-        if (columnLetter == 'a') {
+        if (columnLetter == 'A') {
+            this.column = 0;
+        } else if (columnLetter == 'B') {
             this.column = 1;
-        } else if (columnLetter == 'b') {
+        } else if (columnLetter == 'C') {
             this.column = 2;
-        } else if (columnLetter == 'c') {
+        } else if (columnLetter == 'D') {
             this.column = 3;
-        } else if (columnLetter == 'd') {
+        } else if (columnLetter == 'E') {
             this.column = 4;
-        } else if (columnLetter == 'e') {
+        } else if (columnLetter == 'F') {
             this.column = 5;
-        } else if (columnLetter == 'f') {
+        } else if (columnLetter == 'G') {
             this.column = 6;
-        } else if (columnLetter == 'g') {
+        } else if (columnLetter == 'H') {
             this.column = 7;
-        } else if (columnLetter == 'h') {
-            this.column = 8;
         } else {
             throw new UnsupportedOperationException();
         }
@@ -41,7 +41,7 @@ public class Position {
         char rowLetter = positionString.charAt(1);
         int row = Character.getNumericValue(rowLetter);
         if (row > 0 && row < 9) {
-            this.row = row;
+            this.row = row - 1;
         } else {
             throw new UnsupportedOperationException();
         }
