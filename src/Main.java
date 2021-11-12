@@ -2,7 +2,7 @@ import board.BoardBuilder;
 import board.Board;
 import board.BoardStatus;
 import moves.Move;
-import tree.Tree;
+import searchers.Minimax;
 
 public class Main {
 
@@ -21,7 +21,7 @@ public class Main {
             if (i == 48) {
                 int n = 0;
             }
-            Move optimalMove = Tree.findOptimalMove(board, 4).getSecond();
+            Move optimalMove = Minimax.findOptimalMove(board, 4).getSecond();
             System.out.println(optimalMove);
             board.executeMove(optimalMove);
             System.out.println(board);

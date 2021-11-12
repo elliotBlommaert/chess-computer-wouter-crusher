@@ -1,4 +1,4 @@
-package tree;
+package searchers;
 
 import board.Board;
 import board.BoardStatus;
@@ -6,7 +6,7 @@ import general.Pair;
 import general.Scorer;
 import moves.Move;
 
-public class Tree {
+public class Minimax {
 
     static public Pair<Double, Move> findOptimalMove(Board board, int depth) {
 
