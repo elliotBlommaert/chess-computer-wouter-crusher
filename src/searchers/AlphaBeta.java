@@ -3,9 +3,12 @@ package searchers;
 import board.Board;
 import board.BoardStatus;
 import general.Pair;
+import general.Position;
 import general.Scorer;
 import moves.Move;
+import pieces.Piece;
 
+import java.util.Comparator;
 import java.util.List;
 
 public class AlphaBeta {
@@ -26,8 +29,8 @@ public class AlphaBeta {
             optimalScore = Double.NEGATIVE_INFINITY;
 
             List<Move> allPossibleMoves = board.getAllPossibleMoves();
-            for (int i = 0; i < allPossibleMoves.size(); i++) {
-                Move possibleMove = allPossibleMoves.get(i);
+
+            for (Move possibleMove : allPossibleMoves) {
                 board.executeMove(possibleMove);
                 BoardStatus boardStatus = board.getStatus();
 
@@ -46,23 +49,21 @@ public class AlphaBeta {
                     alpha = score;
                 }
 
-                if (alpha > beta) {
-                    break;
-                }
-
                 if (score >= optimalScore) {
                     optimalScore = score;
                     optimalMove = possibleMove;
-                } else if (i == 0) {
-                    int j = 8;
+                }
+
+                if (alpha > beta) {
+                    break;
                 }
             }
         } else {
             optimalScore = Double.POSITIVE_INFINITY;
 
             List<Move> allPossibleMoves = board.getAllPossibleMoves();
-            for (int i = 0; i < allPossibleMoves.size(); i++) {
-                Move possibleMove = allPossibleMoves.get(i);
+
+            for (Move possibleMove : allPossibleMoves) {
                 board.executeMove(possibleMove);
                 BoardStatus boardStatus = board.getStatus();
 
@@ -81,20 +82,18 @@ public class AlphaBeta {
                     beta = score;
                 }
 
-                if (alpha > beta) {
-                    break;
-                }
-
                 if (score <= optimalScore) {
                     optimalScore = score;
                     optimalMove = possibleMove;
-                }  else if (i == 0) {
-                    int j = 8;
+                }
+
+                if (alpha > beta) {
+                    break;
                 }
             }
         }
 
-//        assert optimalMove != null;
+        assert optimalMove != null;
         return new Pair<>(optimalScore, optimalMove);
     }
 
